@@ -1,48 +1,61 @@
 import { 
   createSession,
   createViewport, 
-  BUSY_MODE_DISPLAY, 
-  FLAG_TYPE, 
-  SPINNER_POSITIONING, 
-  VISIBILITY_MODE 
 } from "@shapediver/viewer";
+import { createParameterMenu } from "./parameters";
 
-// we put all of our code here in an IIFE to allow the "await" statement of promises
-(async () => {
+// Navigation functions
+function showPage(pageId: string) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach((page) => {
+    page.classList.remove('active');
+  });
+  // Show the selected page
+  document.getElementById(pageId)?.classList.add('active');
+}
 
-  // we read out the canvas element of the index.html file
+// Add event listeners for navigation buttons
+document.getElementById('next-to-booth')?.addEventListener('click', () => {
+  showPage('select-booth-page');
+});
+
+document.getElementById('next-to-shapeDiver')?.addEventListener('click', () => {
+  showPage('viewer-page');
+  initShapeDiver();
+});
+
+document.getElementById('back-to-country')?.addEventListener('click', () => {
+  showPage('select-country-page');
+});
+
+document.getElementById('back-to-booth')?.addEventListener('click', () => {
+  showPage('select-booth-page');
+});
+
+// Initial page setup
+showPage('select-country-page');
+
+// Function to initialize ShapeDiver after clicking 'Next' on booth selection
+async function initShapeDiver() {
   const canvasElement = document.getElementById("canvas") as HTMLCanvasElement;
 
-  // we create a viewport with the canvas element we just read out
-  // additionally we adjust some optional properties to change the style of the viewport
+  // we create a viewport with the canvas element
   const viewport = await createViewport({
     canvas: canvasElement,
-    visibility: VISIBILITY_MODE.MANUAL,
-    branding: {
-      logo: "https://viewer.shapediver.com/v3/youtube/video1/catAstronaut.png",
-      backgroundColor: "#008800",
-      spinnerPositioning: SPINNER_POSITIONING.BOTTOM_LEFT,
-      busyModeSpinner: "https://viewer.shapediver.com/v3/youtube/video1/subscribe.gif",
-      busyModeDisplay: BUSY_MODE_DISPLAY.SPINNER
-    },
-    id: "YouTubeViewport1"
-  })
+    // branding: {
+    //   logo: "https://viewer.shapediver.com/v3/youtube/video1/catAstronaut.png",
+    //   backgroundColor: "#008800",
+    // },
+  });
 
   // we create a session with the ticket and modelViewUrl of a model on the ShapeDiver platform
-  // we additionally adjust some optional properties
   const session = await createSession({
-    ticket: "90377527eeeafdd35ed9c698d21b100d4c7388444aac60838be7ff176eed6b979a8c92632db8f3e96d76c913b5ee0c4ea4bec0908aed7b0fd358b690dd3dc23b39d86476293d56fab2f1ed07615095b459ee9c9e68f9718488a22111dbfb54e0d3f6b315174a46-15abf4140442e14d3fb0095c438c5939",
-    modelViewUrl: "https://sdeuc1.eu-central-1.shapediver.com",
-    initialParameterValues: {
-      "de76cade-0cea-47b1-879e-1a0b717910e1": "2"
-    },
-    id: "YouTubeSession1"
-  })
+    ticket: "b4463958e0dc8b5e5b7d151189bc85d8cdb508361c1c9b91a3e06847274aa82a652c42823b2e8fc8b09f655b09fdf689141846aa97a0b145e0e09a101218a5f4fd27369b6bacf98083bfbffc9a907b724a8e0763efbd44f9063200594c5330c2809751da8826fe-362d860ee35d847ab65601c3deefddf6",
+    modelViewUrl: "https://sdr8euc1.eu-central-1.shapediver.com",
+  });
 
-  // once everything is set up, we show the viewport (when setting the visibility of the viewport to SESSION, this call is not needed)
-  viewport.show = true;
+  createParameterMenu(session);
 
-  // we add a flag to always show the busy mode
-  // this is just done to show the gif
-  viewport.addFlag(FLAG_TYPE.BUSY_MODE)
-})();
+  // Optional: Show a busy mode or loader
+  // viewport.addFlag(FLAG_TYPE.BUSY_MODE);
+}

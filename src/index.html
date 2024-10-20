@@ -1,14 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>ShapeDiver</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZbooth</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            height: 70vh;
+            position: relative;
+        }
+
+        #viewer-container {
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            height: 70vh;
+        }
+
+        #menu {
+            width: 25rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto
+        }
+
+        #page-menu {
+            width: 15rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #canvas {
+            flex: 1;
+            aspect-ratio: 1;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+    </style>
 </head>
 
 <body>
-    <div style="width: 100%; height: 100%; position: absolute; left: 0%; top: 0%">
-        <canvas id="canvas"></canvas>
+    <div id="container">
+        <!-- Page 1: Select Country -->
+        <div id="select-country-page" class="page active">
+            <h2>Select Country</h2>
+            <div id="page-menu">
+                <label for="country-select">Country:</label>
+                <select id="country-select">
+                    <option value="kintex">Kintex, Goyang</option>
+                    <option value="makuhari">Makuhari Messe, Chiba</option>
+                </select>
+                <label for="hall-select">Hall:</label>
+                <select id="hall-select">
+                    <option value="hall6">Hall 6</option>
+                </select>
+                <div class="button-container">
+                    <button id="back-to-start" disabled>Back</button>
+                    <button id="next-to-booth">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2: Select Booth -->
+        <div id="select-booth-page" class="page">
+            <h2>Select Booth</h2>
+            <div id="page-menu">
+                <label for="booth-select">Booth:</label>
+                <select id="booth-select">
+                    <option value="booth1">Booth 1</option>
+                    <option value="booth2">Booth 2</option>
+                </select>
+                <div class="button-container">
+                    <button id="back-to-country">Back</button>
+                    <button id="next-to-shapeDiver">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: ShapeDiver -->
+        <div id="viewer-page" class="page">
+            <h2>Booth Viewer</h2>
+            <div id="viewer-container">
+                <canvas id="canvas"></canvas>
+                <div id="menu">
+                    <h3>Parameters</h3>
+                </div>
+            </div>
+            <div class="button-container">
+                <button id="back-to-booth">Back</button>
+            </div>
+        </div>
     </div>
+
+    <script src="bundle.js"></script>
 </body>
 
 </html>

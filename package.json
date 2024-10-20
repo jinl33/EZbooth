@@ -1,24 +1,27 @@
 {
-  "name": "viewer-youtube-tutorial",
+  "name": "booth_viewer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build-prod": "webpack",
-    "build-dev": "webpack serve --config ./webpack.dev.js"
+    "build-dev": "webpack serve --config ./webpack.dev.js",
+    "start": "webpack serve --config ./webpack.dev.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shapediver/ViewerProjectTemplate.git"
+    "url": "git+https://github.com/jinl33/EZbooth.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shapediver/ViewerProjectTemplate/issues"
+    "url": "https://github.com/jinl33/EZbooth/issues"
   },
-  "homepage": "https://github.com/shapediver/ViewerProjectTemplate#readme",
+  "homepage": "https://github.com/jinl33/EZbooth#readme",
   "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
     "@types/pako": "^1.0.3",
     "aws-sdk": "^2.1121.0",
     "html-webpack-plugin": "^5.5.0",
@@ -35,6 +38,9 @@
   "dependencies": {
     "@shapediver/viewer": "^2.3.5",
     "@shapediver/viewer.features.interaction": "^2.3.5",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.1"
   }
 }
