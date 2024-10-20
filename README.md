@@ -1,6 +1,6 @@
-# ShapeDiver Viewer YouTube Tutorials
+# EZbooth
 
-This is the repository that accompanies the ShapeDiver YouTube Viewer tutorial series. There will be a branch for each video so that you can check out the branch and have the examples available to you.
+This is a initial repository for EZbooth, a booth model design tool using the ShapeDiver Viewer API. 
 
 ## Initial Setup
 
