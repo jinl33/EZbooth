@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/index.ts',
@@ -12,7 +12,7 @@ module.exports = {
                 loader: "ts-loader",
                 options: {
                     transpileOnly: true,
-                    onlyCompileBundledFiles: true
+                    onlyCompileBundledFiles: true,
                 }
             }
         ]
@@ -22,11 +22,19 @@ module.exports = {
     },
     devServer: {
         open: true,
-        static: path.resolve(__dirname, 'dist-dev'),
+        static: {
+            directory: path.resolve(__dirname, 'dist'),  // Serve files from `dist`
+        },
+        port: 8080,
+        hot: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         })
-    ]
+    ],
+    output: {
+        filename: 'bundle.js',  // Ensures JavaScript output for browser compatibility
+        path: path.resolve(__dirname, 'dist')
+    }
 };

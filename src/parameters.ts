@@ -37,6 +37,7 @@ const createNumberParameterElement = (session: ISessionApi, paramObject: IParame
     inputElement.value = paramObject.value + "";
     inputElement.min = paramObject.min + "";
     inputElement.max = paramObject.max + "";
+    inputElement.name = paramObject.name;
 
     if(paramObject.type === PARAMETER_TYPE.INT) {
          inputElement.step = "1";
@@ -52,9 +53,10 @@ const createNumberParameterElement = (session: ISessionApi, paramObject: IParame
     }
 }
 
+
 const createStringParameterElement = (session: ISessionApi, paramObject: IParameterApi<string>, parentDiv: HTMLDivElement) => {
     // create a div to include all the elements of this parameters
-    const paramDiv =createParamDiv(paramObject, parentDiv);
+    const paramDiv = createParamDiv(paramObject, parentDiv);
 
     // create input element
     const inputElement = document.createElement('input') as HTMLInputElement;
@@ -105,7 +107,7 @@ const createStringListParameterElement = (session: ISessionApi, paramObject: IPa
 
 const createFileParameterElement = (session: ISessionApi, paramObject: IParameterApi<File | Blob | string>, parentDiv: HTMLDivElement) => {
     // create a div to include all the elements of this parameters
-    const paramDiv =createParamDiv(paramObject, parentDiv);
+    const paramDiv = createParamDiv(paramObject, parentDiv);
 
     // create input element
     const inputElement = document.createElement('input') as HTMLInputElement;

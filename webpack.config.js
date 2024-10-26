@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
@@ -12,21 +12,23 @@ module.exports = {
             safari10: true
           }
         })],
-      },
+    },
     module: {
-        rules: [{
-            test: /\.tsx?$/,
-            loader: "ts-loader",
-            options: {
-                onlyCompileBundledFiles: true
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: "ts-loader",
+                options: {
+                    onlyCompileBundledFiles: true
+                }
             }
-        }],
+        ]
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.js',  // JavaScript output for production
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
