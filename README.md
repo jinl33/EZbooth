@@ -1,6 +1,6 @@
 # EZbooth
 
-This is a initial repository for EZbooth, a booth model design tool using the ShapeDiver Viewer API. 
+This is a initial repository for EZbooth, a booth model design tool. 
 
 ## Initial Setup
 
