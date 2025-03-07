@@ -1,13 +1,130 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --12-regular-font-family: "Pretendard", Helvetica;
+  --12-regular-font-size: 12px;
+  --12-regular-font-style: normal;
+  --12-regular-font-weight: 400;
+  --12-regular-letter-spacing: 0px;
+  --12-regular-line-height: 100%;
+  --14-mideum-font-family: "Pretendard", Helvetica;
+  --14-mideum-font-size: 14px;
+  --14-mideum-font-style: normal;
+  --14-mideum-font-weight: 500;
+  --14-mideum-letter-spacing: 0px;
+  --14-mideum-line-height: 100%;
+  --14-regular-font-family: "Pretendard", Helvetica;
+  --14-regular-font-size: 14px;
+  --14-regular-font-style: normal;
+  --14-regular-font-weight: 400;
+  --14-regular-letter-spacing: 0px;
+  --14-regular-line-height: 100%;
+  --14-semibold-font-family: "Pretendard", Helvetica;
+  --14-semibold-font-size: 14px;
+  --14-semibold-font-style: normal;
+  --14-semibold-font-weight: 600;
+  --14-semibold-letter-spacing: 0px;
+  --14-semibold-line-height: 100%;
+  --16-medium-font-family: "Pretendard", Helvetica;
+  --16-medium-font-size: 16px;
+  --16-medium-font-style: normal;
+  --16-medium-font-weight: 500;
+  --16-medium-letter-spacing: 0px;
+  --16-medium-line-height: 100%;
+  --16-regular-font-family: "Pretendard", Helvetica;
+  --16-regular-font-size: 16px;
+  --16-regular-font-style: normal;
+  --16-regular-font-weight: 400;
+  --16-regular-letter-spacing: 0px;
+  --16-regular-line-height: 100%;
+  --16-semibold-font-family: "Pretendard", Helvetica;
+  --16-semibold-font-size: 16px;
+  --16-semibold-font-style: normal;
+  --16-semibold-font-weight: 600;
+  --16-semibold-letter-spacing: 0px;
+  --16-semibold-line-height: 100%;
+  --18-mideum-font-family: "Pretendard", Helvetica;
+  --18-mideum-font-size: 18px;
+  --18-mideum-font-style: normal;
+  --18-mideum-font-weight: 500;
+  --18-mideum-letter-spacing: 0px;
+  --18-mideum-line-height: 100%;
+  --18-semibold-font-family: "Pretendard", Helvetica;
+  --18-semibold-font-size: 18px;
+  --18-semibold-font-style: normal;
+  --18-semibold-font-weight: 600;
+  --18-semibold-letter-spacing: 0px;
+  --18-semibold-line-height: 100%;
+  --24-semibold-font-family: "Pretendard", Helvetica;
+  --24-semibold-font-size: 24px;
+  --24-semibold-font-style: normal;
+  --24-semibold-font-weight: 600;
+  --24-semibold-letter-spacing: 0px;
+  --24-semibold-line-height: 100%;
+  --black: rgba(17, 17, 17, 1);
+  --collection-1-main: rgba(22, 98, 240, 1);
+  --variable-collection-white: rgba(255, 255, 255, 1);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  padding: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Center the app content */
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Add font imports */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./fonts/Pretendard-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./fonts/Pretendard-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./fonts/Pretendard-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./fonts/Pretendard-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Syncopate';
+  src: url('./fonts/Syncopate-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
 }
