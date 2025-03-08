@@ -1,12 +1,12 @@
 // src/App.tsx
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { StartPage } from './StartPage';
 
 function App() {
   return (
-    <BrowserRouter basename="/EZbooth">
+    <HashRouter basename="/EZbooth">
       <StartPage />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
