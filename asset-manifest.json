@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/EZbooth/static/css/main.89ea105f.css",
-    "main.js": "/EZbooth/static/js/main.564e7a32.js",
+    "main.js": "/EZbooth/static/js/main.f2256dd5.js",
     "static/js/453.1edf5ffc.chunk.js": "/EZbooth/static/js/453.1edf5ffc.chunk.js",
     "static/media/sample.png": "/EZbooth/static/media/sample.e011a58d99e004a43446.png",
     "static/media/Pretendard-Bold.woff2": "/EZbooth/static/media/Pretendard-Bold.0c6f5e225ff28f456183.woff2",
@@ -25,11 +25,11 @@
     "static/media/line-3.svg": "/EZbooth/static/media/line-3.be2335cb9b7fdb6bf7e73057edae5a8f.svg",
     "static/media/vector-39.svg": "/EZbooth/static/media/vector-39.5605c02a8e51b21a62858c71ace20af0.svg",
     "main.89ea105f.css.map": "/EZbooth/static/css/main.89ea105f.css.map",
-    "main.564e7a32.js.map": "/EZbooth/static/js/main.564e7a32.js.map",
+    "main.f2256dd5.js.map": "/EZbooth/static/js/main.f2256dd5.js.map",
     "453.1edf5ffc.chunk.js.map": "/EZbooth/static/js/453.1edf5ffc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.89ea105f.css",
-    "static/js/main.564e7a32.js"
+    "static/js/main.f2256dd5.js"
   ]
 }
