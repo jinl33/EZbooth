@@ -1,7 +1,6 @@
 // src/components/TabNavigation.tsx
 import React from "react";
 import { Change } from "./Change";
-import { Dropdown } from "./Dropdown";
 
 interface TabNavigationProps {
   activeTab: string;

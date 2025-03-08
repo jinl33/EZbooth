@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Dropdown } from "./components/Dropdown";
-import { Change } from "./components/Change";
 import { Setting } from "./components/Setting";
 import { TabNavigation } from "./components/TabNavigation";
 
