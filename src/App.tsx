@@ -1,12 +1,12 @@
 // src/App.tsx
-import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { StartPage } from './StartPage';
 
 function App() {
   return (
-    <div className="App">
+    <BrowserRouter basename="/EZbooth">
       <StartPage />
-    </div>
+    </BrowserRouter>
   );
 }
 
