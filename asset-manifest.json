@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/EZbooth/static/css/main.89ea105f.css",
-    "main.js": "/EZbooth/static/js/main.f2256dd5.js",
+    "main.css": "/EZbooth/static/css/main.65179f16.css",
+    "main.js": "/EZbooth/static/js/main.b1eb1b65.js",
     "static/js/453.1edf5ffc.chunk.js": "/EZbooth/static/js/453.1edf5ffc.chunk.js",
     "static/media/sample.png": "/EZbooth/static/media/sample.e011a58d99e004a43446.png",
     "static/media/Pretendard-Bold.woff2": "/EZbooth/static/media/Pretendard-Bold.0c6f5e225ff28f456183.woff2",
@@ -24,12 +24,12 @@
     "static/media/line-4.svg": "/EZbooth/static/media/line-4.1a9f39b7b2528f9653311b0ec9fb85d2.svg",
     "static/media/line-3.svg": "/EZbooth/static/media/line-3.be2335cb9b7fdb6bf7e73057edae5a8f.svg",
     "static/media/vector-39.svg": "/EZbooth/static/media/vector-39.5605c02a8e51b21a62858c71ace20af0.svg",
-    "main.89ea105f.css.map": "/EZbooth/static/css/main.89ea105f.css.map",
-    "main.f2256dd5.js.map": "/EZbooth/static/js/main.f2256dd5.js.map",
+    "main.65179f16.css.map": "/EZbooth/static/css/main.65179f16.css.map",
+    "main.b1eb1b65.js.map": "/EZbooth/static/js/main.b1eb1b65.js.map",
     "453.1edf5ffc.chunk.js.map": "/EZbooth/static/js/453.1edf5ffc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.89ea105f.css",
-    "static/js/main.f2256dd5.js"
+    "static/css/main.65179f16.css",
+    "static/js/main.b1eb1b65.js"
   ]
 }
