@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Dropdown } from "./components/Dropdown";
-import { Setting } from "./components/Setting";
+import { Regulation } from "./components/Regulation";
 import { TabNavigation } from "./components/TabNavigation";
+import { Export } from "./components/Export";
 
 // Import available images
 import symbol from "./images/symbol.png";
@@ -23,6 +24,9 @@ export const EditTemplate: React.FC = () => {
   // State for title
   const [projectName, setProjectName] = useState("프로젝트 명");
 
+  // State for export button
+  const [showExportModal, setShowExportModal] = useState(false);
+
   // State for active tab
   const [activeTab, setActiveTab] = useState('구조');
   // State for unit
@@ -40,6 +44,45 @@ export const EditTemplate: React.FC = () => {
     set: true,
     individual: false
   });
+
+  // State for wall section
+  const [selectedWall, setSelectedWall] = useState('Wall 1');
+  const [showWallSelectionOptions, setShowWallSelectionOptions] = useState(false);
+  const wallOptions = ['Wall 1', 'Wall 2', 'Wall 3', 'Wall 4'];
+
+  // State for tracking selected materials
+  const [selectedMaterials, setSelectedMaterials] = useState({
+    carpet: '',
+    laminate: '',
+    edgeMolding: '',
+    wallPaint: '',
+    woodenFloor: ''
+  });
+
+  // State for tracking expanded material sections
+  const [expandedMaterialSections, setExpandedMaterialSections] = useState({
+    carpet: false, 
+    laminate: false,
+    edgeMolding: false,
+    wallPaint: false,
+    woodenFloor: false
+  });
+
+  // Toggle material section expansion
+  const toggleMaterialSection = (section: keyof typeof expandedMaterialSections) => {
+    setExpandedMaterialSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  // Handle material selection
+  const handleMaterialSelect = (category: string, id: string) => {
+    setSelectedMaterials(prev => ({
+      ...prev,
+      [category]: id
+    }));
+  };
   
   // Function to toggle furniture section expansion
   const toggleFurnitureSection = (section: keyof typeof expandedFurnitureSections) => {
@@ -99,7 +142,7 @@ export const EditTemplate: React.FC = () => {
   const wallSelectionOptions = ['전체벽', 'wall 1', 'wall 2', 'wall 3'];
 
   // Wall curve state
-  const [wallCurveValue, setWallCurveValue] = useState(60); // Starting at 60% (similar to reference)
+  const [wallCurveValue, setWallCurveValue] = useState(60); // Starting at 60%
 
   // Add these functions to your component
   const handleSliderClick = (e: { currentTarget: any; clientX: number; }) => {
@@ -212,11 +255,6 @@ export const EditTemplate: React.FC = () => {
       ...prev,
       [section]: !prev[section]
     }));
-  };
-
-  const handleSettingClick = () => {
-    // Handle setting button click
-    console.log('Settings clicked');
   };
 
   return (
@@ -890,11 +928,320 @@ export const EditTemplate: React.FC = () => {
                   </div>
                 </>
               )}
-
               {activeTab === '재질' && (
-                <div>
-                  {/* Material tab content */}
-                  <p className="p-4 text-gray-500">재질 탭 내용이 여기에 표시됩니다.</p>
+                <div className="flex flex-col w-[314px] items-start">
+                  {/* Wall Selection */}
+                  <div className="flex flex-col items-start gap-2.5 pt-3.5 pb-2.5 px-2.5 relative self-stretch w-full">
+                    <div className="flex items-center justify-between relative self-stretch w-full">
+                      <div className="relative w-[226px]">
+                        <div 
+                          className="flex w-full items-center justify-between px-2.5 py-[9px] relative bg-white rounded-lg border border-solid border-[#bcc2c9]"
+                        >
+                          <div className="relative font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)] whitespace-nowrap">
+                            {selectedWall}
+                          </div>
+                          <div 
+                            className="cursor-pointer" 
+                            onClick={() => setShowWallSelectionOptions(!showWallSelectionOptions)}
+                          >
+                            <Dropdown className="!relative !w-2.5 !h-2.5" color="#8896A6" />
+                          </div>
+                        </div>
+                        
+                        {/* Wall selection dropdown menu */}
+                        {showWallSelectionOptions && (
+                          <div className="absolute top-full left-0 w-full mt-1 bg-white rounded-lg border border-solid border-[#bcc2c9] z-10 shadow-md">
+                            {wallOptions.map((option, index) => (
+                              <div 
+                                key={index}
+                                className="px-2.5 py-[9px] hover:bg-gray-100 cursor-pointer"
+                                onClick={() => {
+                                  setSelectedWall(option);
+                                  setShowWallSelectionOptions(false);
+                                }}
+                              >
+                                <div className="font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  {option}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Apply button */}
+                      <div className="inline-flex items-center justify-center gap-2.5 px-[11px] py-[9px] bg-[#bbc4d0] hover:bg-[#1662ef] transition-colors rounded-[99999px] cursor-pointer">
+                        <div className="relative w-fit font-12-regular text-white text-[length:var(--12-regular-font-size)] whitespace-nowrap">
+                          apply
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Material Sections */}
+                  <div className="flex flex-col items-start relative self-stretch w-full">
+                    {/* Carpet Section */}
+                    <div className="flex flex-col items-start relative self-stretch w-full">
+                      <div className="flex flex-col items-center relative self-stretch w-full">
+                        <div className="flex items-center justify-between px-2.5 py-3 relative self-stretch w-full">
+                          <div className="relative w-fit font-16-regular text-[#000000] text-[length:var(--16-regular-font-size)] whitespace-nowrap">
+                            Carpet
+                          </div>
+                          <div 
+                            className="cursor-pointer"
+                            onClick={() => toggleMaterialSection('carpet')}
+                          >
+                            <div className={`transform ${expandedMaterialSections.carpet ? 'rotate-180' : ''} transition-transform`}>
+                              <Dropdown className="!relative !w-4 !h-4" color="#888484" />
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          className="relative self-stretch w-full h-px object-cover"
+                          alt="Vector"
+                          src={vector39}
+                        />
+                      </div>
+
+                      {/* Carpet Content - Only show when expanded */}
+                      {expandedMaterialSections.carpet && (
+                        <div className="flex flex-col items-start gap-3.5 px-2.5 py-3.5 relative self-stretch w-full">
+                          {/* First Row */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full">
+                            {[...Array(4)].map((_, index) => (
+                              <div key={`carpet-row1-${index}`} className="flex flex-col w-[66px] items-start gap-1.5 relative">
+                                <div 
+                                  className={`relative self-stretch w-full h-[67px] bg-[#ededed] rounded-sm hover:border hover:border-solid hover:border-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.carpet === `carpet-${index}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  onClick={() => handleMaterialSelect('carpet', `carpet-${index}`)}
+                                />
+                                <div className="relative self-stretch font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  name
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Second Row */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full">
+                            {[...Array(4)].map((_, index) => (
+                              <div key={`carpet-row2-${index}`} className="flex flex-col w-[66px] items-start gap-1.5 relative">
+                                <div 
+                                  className={`relative self-stretch w-full h-[67px] bg-[#ededed] rounded-sm hover:border hover:border-solid hover:border-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.carpet === `carpet-${index+4}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  onClick={() => handleMaterialSelect('carpet', `carpet-${index+4}`)}
+                                />
+                                <div className="relative self-stretch font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  name
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Laminate Section */}
+                    <div className="flex flex-col items-start relative self-stretch w-full">
+                      <div className="flex flex-col items-center relative self-stretch w-full">
+                        <div className="flex items-center justify-between px-2.5 py-3 relative self-stretch w-full">
+                          <div className="relative w-fit font-16-regular text-[#000000] text-[length:var(--16-regular-font-size)] whitespace-nowrap">
+                            Laminate
+                          </div>
+                          <div 
+                            className="cursor-pointer"
+                            onClick={() => toggleMaterialSection('laminate')}
+                          >
+                            <div className={`transform ${expandedMaterialSections.laminate ? 'rotate-180' : ''} transition-transform`}>
+                              <Dropdown className="!relative !w-4 !h-4" color="#888484" />
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          className="relative self-stretch w-full h-px object-cover"
+                          alt="Vector"
+                          src={vector39}
+                        />
+                      </div>
+
+                      {/* Laminate Content - Only show when expanded */}
+                      {expandedMaterialSections.laminate && (
+                        <div className="flex flex-col items-start gap-3.5 px-2.5 py-3.5 relative self-stretch w-full">
+                          {/* First Row */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full">
+                            {[...Array(4)].map((_, index) => (
+                              <div key={`laminate-row1-${index}`} className="flex flex-col w-[66px] items-start gap-1.5 relative">
+                                <div 
+                                  className={`relative self-stretch w-full h-[67px] bg-[#ededed] rounded-sm hover:border hover:border-solid hover:border-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.laminate === `laminate-${index}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  onClick={() => handleMaterialSelect('laminate', `laminate-${index}`)}
+                                />
+                                <div className="relative self-stretch font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  name
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Second Row */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full">
+                            {[...Array(4)].map((_, index) => (
+                              <div key={`laminate-row2-${index}`} className="flex flex-col w-[66px] items-start gap-1.5 relative">
+                                <div 
+                                  className={`relative self-stretch w-full h-[67px] bg-[#ededed] rounded-sm hover:border hover:border-solid hover:border-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.laminate === `laminate-${index+4}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  onClick={() => handleMaterialSelect('laminate', `laminate-${index+4}`)}
+                                />
+                                <div className="relative self-stretch font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  name
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Edge Molding Section */}
+                    <div className="flex flex-col items-start relative self-stretch w-full">
+                      <div className="flex flex-col items-center relative self-stretch w-full">
+                        <div className="flex items-center justify-between px-2.5 py-3 relative self-stretch w-full">
+                          <div className="relative w-fit font-16-regular text-[#000000] text-[length:var(--16-regular-font-size)] whitespace-nowrap">
+                            Edge Molding
+                          </div>
+                          <div 
+                            className="cursor-pointer"
+                            onClick={() => toggleMaterialSection('edgeMolding')}
+                          >
+                            <div className={`transform ${expandedMaterialSections.edgeMolding ? 'rotate-180' : ''} transition-transform`}>
+                              <Dropdown className="!relative !w-4 !h-4" color="#888484" />
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          className="relative self-stretch w-full h-px object-cover"
+                          alt="Vector"
+                          src={vector39}
+                        />
+                      </div>
+
+                      {/* Edge Molding Content - Only show when expanded */}
+                      {expandedMaterialSections.edgeMolding && (
+                        <div className="flex flex-col items-start gap-3.5 px-2.5 py-3.5 relative self-stretch w-full">
+                          {/* Material rows here */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full">
+                            {[...Array(4)].map((_, index) => (
+                              <div key={`edge-row1-${index}`} className="flex flex-col w-[66px] items-start gap-1.5 relative">
+                                <div 
+                                  className={`relative self-stretch w-full h-[67px] bg-[#ededed] rounded-sm hover:border hover:border-solid hover:border-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.edgeMolding === `edge-${index}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  onClick={() => handleMaterialSelect('edgeMolding', `edge-${index}`)}
+                                />
+                                <div className="relative self-stretch font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  name
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Wall Paint Section */}
+                    <div className="flex flex-col items-start relative self-stretch w-full">
+                      <div className="flex flex-col items-center relative self-stretch w-full">
+                        <div className="flex items-center justify-between px-2.5 py-3 relative self-stretch w-full">
+                          <div className="relative w-fit font-16-regular text-[#000000] text-[length:var(--16-regular-font-size)] whitespace-nowrap">
+                            Wall Paint
+                          </div>
+                          <div 
+                            className="cursor-pointer"
+                            onClick={() => toggleMaterialSection('wallPaint')}
+                          >
+                            <div className={`transform ${expandedMaterialSections.wallPaint ? 'rotate-180' : ''} transition-transform`}>
+                              <Dropdown className="!relative !w-4 !h-4" color="#888484" />
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          className="relative self-stretch w-full h-px object-cover"
+                          alt="Vector"
+                          src={vector39}
+                        />
+                      </div>
+
+                      {/* Wall Paint Content - Only show when expanded */}
+                      {expandedMaterialSections.wallPaint && (
+                        <div className="flex flex-col items-start gap-3.5 px-2.5 py-3.5 relative self-stretch w-full">
+                          {/* Color Palette */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full flex-wrap">
+                            {['#FFFFFF', '#F5F5F5', '#E0E0E0', '#BDBDBD', '#9E9E9E', '#757575', '#616161', '#424242', '#212121', '#000000'].map((color, index) => (
+                              <div key={`c  olor-${index}`} className="flex flex-col w-[28px] items-start gap-1 relative mb-2">
+                                <div 
+                                  className={`relative self-stretch w-full h-[28px] rounded-full border border-solid border-[#dddddd] hover:ring-2 hover:ring-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.wallPaint === `color-${index}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  style={{ backgroundColor: color }}
+                                  onClick={() => handleMaterialSelect('wallPaint', `color-${index}`)}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Wooden Floor Section */}
+                    <div className="flex flex-col items-start relative self-stretch w-full">
+                      <div className="flex flex-col items-center relative self-stretch w-full">
+                        <div className="flex items-center justify-between px-2.5 py-3 relative self-stretch w-full">
+                          <div className="relative w-fit font-16-regular text-[#000000] text-[length:var(--16-regular-font-size)] whitespace-nowrap">
+                            Wooden Floor
+                          </div>
+                          <div 
+                            className="cursor-pointer"
+                            onClick={() => toggleMaterialSection('woodenFloor')}
+                          >
+                            <div className={`transform ${expandedMaterialSections.woodenFloor ? 'rotate-180' : ''} transition-transform`}>
+                              <Dropdown className="!relative !w-4 !h-4" color="#888484" />
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          className="relative self-stretch w-full h-px object-cover"
+                          alt="Vector"
+                          src={vector39}
+                        />
+                      </div>
+
+                      {/* Wooden Floor Content - Only show when expanded */}
+                      {expandedMaterialSections.woodenFloor && (
+                        <div className="flex flex-col items-start gap-3.5 px-2.5 py-3.5 relative self-stretch w-full">
+                          {/* Wood Samples */}
+                          <div className="flex items-center gap-2.5 relative self-stretch w-full">
+                            {[...Array(4)].map((_, index) => (
+                              <div key={`wood-row1-${index}`} className="flex flex-col w-[66px] items-start gap-1.5 relative">
+                                <div 
+                                  className={`relative self-stretch w-full h-[67px] bg-[#f5efe0] rounded-sm hover:border hover:border-solid hover:border-[#1662ef] transition-all cursor-pointer ${
+                                    selectedMaterials.woodenFloor === `wood-${index}` ? 'ring-2 ring-[#1662ef]' : ''
+                                  }`}
+                                  onClick={() => handleMaterialSelect('woodenFloor', `wood-${index}`)}
+                                />
+                                <div className="relative self-stretch font-12-regular text-[#000000] text-[length:var(--12-regular-font-size)]">
+                                  oak
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -904,15 +1251,14 @@ export const EditTemplate: React.FC = () => {
 
       {/* Main content area */}
       <div className="absolute w-[1042px] h-[800px] top-[94px] left-[376px] rounded-2xl bg-[url('./images/sample.png')] bg-cover">
-        {/* Setting button */}
+        {/* Regulation button */}
         <div className="inline-flex items-center justify-center gap-2.5 px-[22px] py-4 absolute top-[733px] left-[887px] bg-white rounded-[99999px]">
-          <Setting className="!relative !w-3.5 !h-3.5 mr-1" />
+          <Regulation className="!relative !w-3.5 !h-3.5 mr-1" />
           <div className="relative w-fit mt-[-1.00px] font-14-mideum font-[number:var(--14-mideum-font-weight)] text-[#141414] text-[length:var(--14-mideum-font-size)] tracking-[var(--14-mideum-letter-spacing)] leading-[var(--14-mideum-line-height)] whitespace-nowrap [font-style:var(--14-mideum-font-style)]">
             Regulation
           </div>
         </div>
 
-        
         {/* Comments button */}
         <div className="inline-flex items-center justify-center gap-2.5 px-[22px] py-4 absolute top-[733px] left-[26px] bg-white rounded-[99999px]">
           <div className="relative w-fit mt-[-1.00px] font-14-mideum font-[number:var(--14-mideum-font-weight)] text-[#141414] text-[length:var(--14-mideum-font-size)] tracking-[var(--14-mideum-letter-spacing)] leading-[var(--14-mideum-line-height)] whitespace-nowrap [font-style:var(--14-mideum-font-style)]">
@@ -922,7 +1268,10 @@ export const EditTemplate: React.FC = () => {
       </div>
 
       {/* Export Button */}
-      <div className="inline-flex items-center justify-center gap-2.5 px-[26px] py-[17px] absolute top-[22px] left-[1298px] bg-collection-1-main rounded-[99999px]">
+      <div 
+        className="inline-flex items-center justify-center gap-2.5 px-[26px] py-[17px] absolute top-[22px] left-[1298px] bg-collection-1-main rounded-[99999px] cursor-pointer"
+        onClick={() => setShowExportModal(true)}
+      >
         <div className="inline-flex items-center gap-1.5 relative flex-[0_0_auto]">
           <img className="relative w-[13px] h-[13px]" alt="Subtract" src={symbol1} />
           <div className="relative w-fit mt-[-1.00px] font-16-medium font-[number:var(--16-medium-font-weight)] text-white text-[length:var(--16-medium-font-size)] tracking-[var(--16-medium-letter-spacing)] leading-[var(--16-medium-line-height)] whitespace-nowrap [font-style:var(--16-medium-font-style)]">
@@ -930,6 +1279,12 @@ export const EditTemplate: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Render Export Button Conditionally*/}
+      {showExportModal && (
+        <div className="absolute top-[70px] left-[1200px] z-50">
+          <Export onClose={() => setShowExportModal(false)} />
+        </div>
+      )}
       {/* Regulation Modal Overlay */}
       {showRegulationModal && (
         <div 
