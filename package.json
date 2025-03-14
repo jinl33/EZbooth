@@ -2,7 +2,7 @@
   "name": "EZbooth",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jinl33.github.io/EZbooth",
+  "homepage": "/",
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@testing-library/jest-dom": "^5.16.5",

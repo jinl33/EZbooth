@@ -20,14 +20,29 @@ const Dropdown: React.FC<DropdownProps> = ({ options, selectedOption, onSelect, 
     <div className="relative w-full mb-5">
       <div className="text-sm text-gray-500 mb-2">{label}</div>
       <div 
-        className="w-full py-3 px-4 rounded-full border border-gray-200 bg-white text-sm flex justify-between items-center cursor-pointer"
+        className="w-full py-3 px-4 rounded-[10px] border border-gray-200 bg-white text-sm flex justify-between items-center cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>{selectedOption}</span>
-        <span>▼</span>
+        <svg 
+          width="12" 
+          height="12" 
+          viewBox="0 0 12 12" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        >
+          <path 
+            d="M9 4.5L6 7.5L3 4.5" 
+            stroke="#888484" 
+            strokeWidth="1.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          />
+        </svg>
       </div>
       {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-white rounded-lg shadow-md mt-1 z-10">
+        <div className="absolute top-full left-0 w-full bg-white rounded-b-[10px] border border-t-0 border-gray-200 shadow-md mt-0 z-10">
           {options.map((option) => (
             <div 
               key={option}
@@ -63,9 +78,9 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   
   const handleExport = () => {
     alert(`Exporting file:
-- Format: ${fileFormat}
-- Size: ${fileSize}
-- Include option: ${includeOption ? 'Yes' : 'No'}`);
+    - Format: ${fileFormat}
+    - Size: ${fileSize}
+    - Include option: ${includeOption ? 'Yes' : 'No'}`);
   };
   
   const handleClose = () => {
