@@ -178,12 +178,26 @@ export const ChooseTemplate: React.FC = () => {
   // Function to handle custom color selection
   const handleCustomColorSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColorFilter(e.target.value);
+    const newColor = e.target.value;
+    // If the same color is selected again, clear the filter
+    if (colorFilter === newColor) {
+      setColorFilter("");
+    } else {
+      setColorFilter(newColor);
+    }
   };
   
 
   // Function to handle color selection
   const handleColorSelect = (color: string) => {
     setColorFilter(color);
+    // If the same color is clicked again, clear the filter
+    if (colorFilter === color) {
+      setColorFilter("");
+    } else {
+      setColorFilter(color);
+    }
+
     setIsColorPaletteVisible(false);
   };
 
