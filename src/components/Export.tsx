@@ -92,7 +92,7 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   };
   
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/4 -translate-y-1/5 bg-white rounded-xl shadow- w-80 p-4 mr-50">
+    <div className="absolute left-1/2 transform -translate-x-1/4 -translate-y-1/5 bg-white rounded-xl shadow- w-80 p-4 mr-50 border border-gray-300">
       {/* Tab Bar */}
       <div className="flex mb-6 border-b border-gray-200">
         {tabs.map((tab) => (

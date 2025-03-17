@@ -1281,7 +1281,7 @@ export const EditTemplate: React.FC = () => {
       </div>
       {/* Render Export Button Conditionally*/}
       {showExportModal && (
-        <div className="absolute top-[70px] left-[1200px] z-50">
+        <div className="absolute top-[21px] left-[1050px] z-50">
           <Export onClose={() => setShowExportModal(false)} />
         </div>
       )}
