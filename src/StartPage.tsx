@@ -89,13 +89,13 @@ export const StartPage: React.FC = () => {
               ⏰
             </div>
 
-            <div className="absolute w-[116px] h-[114px] top-[400px] left-[287px]">
+            <div className="absolute w-[116px] h-[114px] top-[400px] left-[330px]">
               <div className="relative w-[114px] h-[114px]">
-                <div className="absolute top-[9px] left-[23px] rotate-[8.50deg] font-bold text-[55.4px] tracking-[-1.11px] leading-[88.7px] whitespace-nowrap">
+                <div className="absolute top-[5px] left-[23px] rotate-[8.50deg] font-bold text-[55.4px] tracking-[-1.11px] leading-[88.7px] whitespace-nowrap">
                   🙌
                 </div>
                 <img
-                  className="absolute w-[114px] h-[114px] top-0 left-0"
+                  className="absolute w-[100px] h-[100px] top-0 left-0"
                   alt="Ellipse"
                   src={ellipse774}
                 />
@@ -104,7 +104,7 @@ export const StartPage: React.FC = () => {
 
             <div className="absolute w-[90px] h-[88px] top-[89px] right-[300px]">
               <div className="relative w-[88px] h-[88px]">
-                <div className="absolute top-4 left-[21px] rotate-[-15.00deg] font-bold text-[36.1px] tracking-[-0.72px] leading-[57.8px] whitespace-nowrap">
+                <div className="absolute top-4 left-[25px] rotate-[-15.00deg] font-bold text-[36.1px] tracking-[-0.72px] leading-[57.8px] whitespace-nowrap">
                   ✅
                 </div>
                 <img
@@ -142,6 +142,7 @@ export const StartPage: React.FC = () => {
 
                 <button 
                   type="button"
+                  onClick={() => window.open("https://blog.naver.com/ezbooth", "_blank")}
                   className="flex w-44 items-center justify-center gap-2.5 px-[26px] py-5 bg-white rounded-[99999px] border border-solid border-[#1662ef20] shadow-sm hover:shadow-md transition-shadow"
                 >
                   <span className="text-[#1662ef] whitespace-nowrap">
@@ -154,8 +155,8 @@ export const StartPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Spacer between sections */}
-      <div className="h-[100px]"></div>
+      {/* Spacer */}
+      <div className="h-[110px]"></div>
 
       {/* Second section */}
       <section className="relative w-full h-[800px]">
@@ -170,7 +171,6 @@ export const StartPage: React.FC = () => {
         
         {/* Section 2 */}
         <div className="relative z-10 flex flex-col items-center w-full pt-[100px]">
-          {/* Frame component content integrated directly */}
           <div className="flex flex-col max-w-[500px] w-full items-center gap-[30px] px-4">
             <div className="font-semibold text-[#000000] text-xl text-center tracking-[0] leading-[26.0px]">
               Design Anytime, Anywhere
@@ -277,7 +277,7 @@ export const StartPage: React.FC = () => {
         {/* Background  */}
         <section className="relative w-full flex justify-center items-start">
           {/* Outer gradient */}
-          <div className="absolute w-[1522px] h-[1522px] top-[-500px] flex items-center justify-center rounded-[747.79px] [background:linear-gradient(180deg,rgba(22,98,240,0)_0%,rgba(22,98,240,0.7)_100%)] opacity-60">
+          <div className="absolute w-[1522px] h-[1522px] top-[-400px] flex items-center justify-center rounded-[747.79px] [background:linear-gradient(180deg,rgba(22,98,240,0)_0%,rgba(22,98,240,0.7)_100%)] opacity-60">
             {/* Inner gradient */}
             <div className="relative w-[1226.06px] h-[1226.06px] rounded-[613.03px] [background:linear-gradient(180deg,rgba(22,98,240,0)_0%,rgba(22,98,240,0.8)_100%)]" />
           </div>

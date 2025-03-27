@@ -4,13 +4,24 @@ import logo from "./images/logo.png";
 import image1 from "./images/image.png";
 import image2 from "./images/image.svg";
 import ellipse47 from "./images/ellipse-47.svg"
-import maskGroup from "./images/mask-group1.png";
-import maskGroup1 from "./images/mask-group2.png";
+import temp1 from "./images/temp1.png";
+import temp2 from "./images/temp2.png";
+import temp3 from "./images/temp3.png";
+import temp4 from "./images/temp4.png";
+import temp5 from "./images/temp5.png";
+import temp6 from "./images/temp6.png";
+import temp7 from "./images/temp7.png";
+import temp8 from "./images/temp8.png";
+import temp9 from "./images/temp9.png";
+import temp10 from "./images/temp10.png";
+import temp11 from "./images/temp11.png";
+import temp12 from "./images/temp12.png";
+
 
 // Template interface for type safety
 interface Template {
   id: string;
-  name: string;
+  // name: string;
   description: string;
   attributes: {
     size: string;
@@ -32,46 +43,151 @@ export const ChooseTemplate: React.FC = () => {
     keyword: ""
   });
 
-  // Create template data with the first one being unique
+  // Create template data with all 12 templates
   const templateData: Template[] = [
     {
       id: "template-1",
-      name: "스마트 미팅 부스",
-      description: "소형 · 미팅형 · 1면 오픈 · 모던한 · 직선의 · 복층",
+      description: "중형 · 미팅형 · 3면 오픈 · 모던한 · 직선의 · 복층",
       attributes: {
-        size: "소형",
+        size: "중형",
         purpose: "미팅형", 
-        shape: "1면 오픈",
+        shape: "3면 오픈",
         keywords: ["모던한", "직선의", "복층"],
       },
-      image: maskGroup
+      image: temp1
     },
     // Second template
     {
       id: "template-2",
-      name: "기본 전시 부스",
-      description: "중형 · 전시형 · 2면 오픈 · 깔끔한 · 목재",
+      description: "소형 · 전시형 · 2면 오픈 · 컬러풀한 · 직선의",
+      attributes: {
+        size: "소형",
+        purpose: "전시형",
+        shape: "2면 오픈",
+        keywords: ["컬러풀한", "직선의"],
+      },
+      image: temp2
+    },
+    // Template 3
+    {
+      id: "template-3",
+      description: "소형 · 미팅형 · 2면 오픈 · 모던한 · 직선의 · 패브릭마감",
+      attributes: {
+        size: "소형",
+        purpose: "미팅형",
+        shape: "2면 오픈",
+        keywords: ["모던한", "직선의", "패브릭마감"],
+      },
+      image: temp3
+    },
+    // Template 4
+    {
+      id: "template-4",
+      description: "소형 · 전시형 · 2면 오픈 · 모던한 · 직선의 · 그래픽",
+      attributes: {
+        size: "소형",
+        purpose: "전시형",
+        shape: "2면 오픈",
+        keywords: ["모던한", "직선의", "그래픽"],
+      },
+      image: temp4
+    },
+    // Template 5
+    {
+      id: "template-5",
+      description: "중형 · 전시/미팅형 · 2면 오픈 · 모던한 · 직선의 · 복층",
+      attributes: {
+        size: "중형",
+        purpose: "전시/미팅형",
+        shape: "2면 오픈",
+        keywords: ["모던한", "직선의", "복층"],
+      },
+      image: temp5
+    },
+    // Template 6
+    {
+      id: "template-6",
+      description: "중형 · 전시/미팅형 · 2면 오픈 · 모던한 · 직선의",
+      attributes: {
+        size: "중형",
+        purpose: "전시/미팅형",
+        shape: "2면 오픈",
+        keywords: ["모던한", "직선의"],
+      },
+      image: temp6
+    },
+    // Template 7
+    {
+      id: "template-7",
+      description: "중형 · 시연형 · 2면 오픈 · 컨츄리풍의 · 직선의",
+      attributes: {
+        size: "중형",
+        purpose: "시연형",
+        shape: "2면 오픈",
+        keywords: ["컨츄리풍의", "직선의"],
+      },
+      image: temp7
+    },
+    // Template 8
+    {
+      id: "template-8",
+      description: "중형 · 전시/미팅형 · 2면 오픈 · 자연친화적인 · 직선의",
+      attributes: {
+        size: "중형",
+        purpose: "전시/미팅형",
+        shape: "2면 오픈",
+        keywords: ["자연친화적인", "직선의"],
+      },
+      image: temp8
+    },
+    // Template 9
+    {
+      id: "template-9",
+      description: "중형 · 전시형 · 3면 오픈 · 모던한 · 직선의 · lED",
+      attributes: {
+        size: "중형",
+        purpose: "전시형",
+        shape: "3면 오픈",
+        keywords: ["모던한", "직선의", "lED"],
+      },
+      image: temp9
+    },
+    // Template 10
+    {
+      id: "template-10",
+      description: "중형 · 전시형 · 2면 오픈 · 자연친화적인 · 직선의",
       attributes: {
         size: "중형",
         purpose: "전시형",
         shape: "2면 오픈",
-        keywords: ["깔끔한", "목재"],
+        keywords: ["자연친화적인", "직선의"],
       },
-      image: maskGroup1
+      image: temp10
     },
-    // Add more template placeholders
-    ...Array(10).fill(null).map((_, i) => ({
-      id: `template-${i+3}`,
-      name: "템플릿 명",
-      description: "크기 · 목적 · 형태 · 키워드",
+    // Template 11
+    {
+      id: "template-11",
+      description: "중형 · 전시형 · 2면 오픈 · 모던한 · 직선의 · 라이팅",
       attributes: {
-        size: i % 3 === 0 ? "소형" : i % 3 === 1 ? "중형" : "대형",
-        purpose: i % 3 === 0 ? "미팅형" : i % 3 === 1 ? "전시형" : "미팅+전시형",
-        shape: `${(i % 4) + 1}면 오픈`,
-        keywords: i % 2 === 0 ? ["모던한", "직선의"] : ["곡선의", "화려한"],
+        size: "중형",
+        purpose: "전시형",
+        shape: "2면 오픈",
+        keywords: ["모던한", "직선의", "라이팅"],
       },
-      image: ""
-    }))
+      image: temp11
+    },
+    // Template 12
+    {
+      id: "template-12",
+      description: "소형 · 전시형 · 2면 오픈 · 모던한 · 직선의 · 라이팅",
+      attributes: {
+        size: "소형",
+        purpose: "전시형",
+        shape: "2면 오픈",
+        keywords: ["모던한", "직선의", "라이팅"],
+      },
+      image: temp12
+    }
   ];
 
   // State for filtered templates
@@ -149,7 +265,7 @@ export const ChooseTemplate: React.FC = () => {
     const filtered = templateData.filter(template => {
       // Search by term in name or description
       const matchesSearchTerm = !searchTerm || 
-        template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        // template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         template.description.toLowerCase().includes(searchTerm.toLowerCase());
       
       // Filter by size
@@ -255,19 +371,18 @@ export const ChooseTemplate: React.FC = () => {
   const navigate = useNavigate();
 
   // Function to handle the template selection
-  const handleStartWithTemplate = (templateId?: string) => {
-    // Close the modal if it's open
-    setIsModalOpen(false);
-    
-    // Pass the selected template ID or data if needed
+  const handleStartWithTemplate = (template: Template) => {
+    // Navigate directly to edit-template page with template image as state
     navigate('/edit-template', { 
-      state: { templateId: templateId || 'default'} 
+      state: { 
+        templateId: template.id,
+        templateImage: template.image 
+      } 
     });
   };
 
-
-  const handleTemplateClick = (template: Template) => {
-    console.log("Template selected");
+  // Function to view template details
+  const handleViewDetails = (template: Template) => {
     setSelectedTemplateForModal(template);
     setIsModalOpen(true);
   };
@@ -348,7 +463,7 @@ export const ChooseTemplate: React.FC = () => {
         </div>
 
         {/* Filter and search section */}
-        <div className="px-[60px] mt-6">
+        <div className="px-[60px] mt-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {/* Size Filter with Dropdown */}
@@ -646,7 +761,7 @@ export const ChooseTemplate: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-4 gap-9">
               {filteredTemplates.map((template) => (
                 <div key={template.id} className="flex flex-col w-full items-start gap-2.5 group">
                   <div className="relative w-full h-[181px] overflow-hidden rounded-lg">
@@ -658,16 +773,15 @@ export const ChooseTemplate: React.FC = () => {
                       />
                     ) : (
                       <div className="w-full h-full bg-[#d9d9d9] flex items-center justify-center">
-                        {/* Placeholder for templates without images */}
+                        {/* Placeholder for templates */}
                       </div>
                     )}
-                    
-                    {/* Overlay that appears on hover */}
-                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center">
+                    {/* Overlay on hover */}
+                    <div className="absolute inset-0 bg-[#e3e1da] bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center">
                       <div className="flex flex-col w-[190px] items-start gap-2.5">
                         <button 
-                          onClick={() => handleTemplateClick(template)}
-                          className="flex items-center justify-center gap-2.5 px-[22px] py-4 w-full bg-[#1662ef] rounded-[99999px] border border-solid hover:bg-[#1255d4] transition-colors"
+                          onClick={() => handleStartWithTemplate(template)}
+                          className="flex items-center justify-center gap-2.5 px-[22px] py-4 w-full bg-[#1662ef] rounded-[99999px] border border-solid hover:bg-[#1255d4] transition-colors shadow-lg"
                         >
                           <span className="text-white text-sm whitespace-nowrap">
                             이 템플릿으로 시작하기
@@ -675,8 +789,8 @@ export const ChooseTemplate: React.FC = () => {
                         </button>
 
                         <button 
-                          onClick={() => handleTemplateClick(template)}
-                          className="flex items-center justify-center gap-2.5 px-[22px] py-4 w-full bg-[#000000cc] rounded-[99999px] border border-solid border-[#000000] hover:bg-black transition-colors"
+                          onClick={() => handleViewDetails(template)}
+                          className="flex items-center justify-center gap-2.5 px-[22px] py-4 w-full bg-[#000000cc] rounded-[99999px] border border-solid border-[#000000] hover:bg-black transition-colors shadow-lg"
                         >
                           <span className="text-white text-sm whitespace-nowrap">
                             자세히 보기
@@ -685,12 +799,11 @@ export const ChooseTemplate: React.FC = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="flex flex-col items-start gap-1.5 w-full">
-                    <div className="font-semibold text-[#000000] text-base">
-                      {template.name}
-                    </div>
-                    <p className="text-[#606e7e] text-xs">
+                    {/* <div className="font-semibold text-[#000000] text-base"> */}
+                      {/* {template.name} */}
+                    {/* </div> */}
+                    <p className="font-14-semibold font-[number:var(--14-semibold-font-weight)] text-[#000000] text-[length:var(--14-semibold-font-size)] tracking-[number:var(--14-semibold-letter-spacing)] leading-[number:var(--14-semibold-line-height)] [font-style:var(--14-semibold-font-style)]">
                       {template.description}
                     </p>
                   </div>
@@ -704,109 +817,104 @@ export const ChooseTemplate: React.FC = () => {
         <div className="h-[100px]"></div>
       </div>
       {/* Modal Overlay */}
-      {isModalOpen && (
-      <div 
-        className="fixed inset-0 bg-[#4B5056] bg-opacity-50 flex items-center justify-center z-50"
-        onClick={() => setIsModalOpen(false)}
-      >
-        <div onClick={(e) => e.stopPropagation()}>
-          {/* Frame Component */}
-          <div className="flex flex-col w-[760px] items-center gap-3.5 pt-0 pb-6 px-0 relative bg-white rounded-2xl shadow-xl">
-            <div className="flex flex-col items-start px-5 py-0 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center justify-between px-2.5 py-[22px] relative self-stretch w-full flex-[0_0_auto]">
-                <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                  <div className="w-fit mt-[-1.00px] font-semibold text-[#1662ef] text-xl text-left leading-5 whitespace-nowrap relative tracking-[0]">
-                    템플릿 상세정보
+      {isModalOpen && selectedTemplateForModal && (
+        <div 
+          className="fixed inset-0 bg-[#4B5056] bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div onClick={(e) => e.stopPropagation()}>
+            {/* Frame Component */}
+            <div className="flex flex-col w-[760px] items-center gap-3.5 pt-0 pb-6 px-0 relative bg-white rounded-2xl shadow-xl">
+              <div className="flex flex-col items-start px-5 py-0 relative self-stretch w-full flex-[0_0_auto]">
+                <div className="flex items-center justify-between px-2.5 py-[22px] relative self-stretch w-full flex-[0_0_auto]">
+                  <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+                    <div className="w-fit mt-[-1.00px] font-semibold text-[#1662ef] text-xl text-left leading-5 whitespace-nowrap relative tracking-[0]">
+                      템플릿 상세정보
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={() => setIsModalOpen(false)}
+                    className="relative w-5 h-5 flex items-center justify-center"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M15 5L5 15M5 5L15 15" stroke="#606E7E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="relative self-stretch w-full h-px bg-gray-200"></div>
+              </div>
+
+              <div className="flex w-[700px] items-center gap-6 relative flex-[0_0_auto]">
+                {/* Display selected template image */}
+                <div 
+                  className="flex flex-col w-[430px] h-[310.28px] items-end justify-end gap-2.5 p-2.5 relative rounded-lg bg-cover bg-center" 
+                  style={{ backgroundImage: `url(${selectedTemplateForModal.image})` }}
+                >
+                  <div className="inline-flex items-center gap-1.5 relative flex-[0_0_auto]">
+                    <div className="bg-[#0040f2] relative w-5 h-5 rounded-[10px]" />
+                    <div className="bg-white border-[0.5px] border-solid border-[#bbc4d0e6] relative w-5 h-5 rounded-[10px]" />
                   </div>
                 </div>
 
-                <button 
-                  onClick={() => setIsModalOpen(false)}
-                  className="relative w-5 h-5 flex items-center justify-center"
-                >
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 5L5 15M5 5L15 15" stroke="#606E7E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-              </div>
-
-              <div className="relative self-stretch w-full h-px bg-gray-200"></div>
-            </div>
-
-            <div className="flex w-[700px] items-center gap-6 relative flex-[0_0_auto]">
-              <div className="flex flex-col w-[430px] h-[310.28px] items-end justify-end gap-2.5 p-2.5 relative rounded-lg bg-cover bg-center" style={{ backgroundImage: `url(${maskGroup1})` }}>
-                <div className="inline-flex items-center gap-1.5 relative flex-[0_0_auto]">
-                  <div className="bg-[#0040f2] relative w-5 h-5 rounded-[10px]" />
-                  <div className="bg-white border-[0.5px] border-solid border-[#bbc4d0e6] relative w-5 h-5 rounded-[10px]" />
-                </div>
-              </div>
-
-              <div className="flex flex-col items-start gap-5 relative flex-1 grow">
-                <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
-                    <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                      <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                        <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] bg-white rounded-full border border-solid border-[#bbc4d0]">
-                          <div className="relative w-fit mt-[-1.00px] text-xs text-[#000000] whitespace-nowrap">
-                            곡선의
-                          </div>
+                <div className="flex flex-col items-start gap-5 relative flex-1 grow">
+                  <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
+                    <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
+                      <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+                        <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+                          {selectedTemplateForModal.attributes.keywords.slice(0, 2).map((keyword, index) => (
+                            <div key={index} className="inline-flex items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] bg-white rounded-full border border-solid border-[#bbc4d0]">
+                              <div className="relative w-fit mt-[-1.00px] text-xs text-[#000000] whitespace-nowrap">
+                                {keyword}
+                              </div>
+                            </div>
+                          ))}
                         </div>
 
-                        <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] bg-white rounded-full border border-solid border-[#bbc4d0]">
-                          <div className="relative w-fit mt-[-1.00px] text-xs text-[#000000] whitespace-nowrap">
-                            모던한
-                          </div>
+                        <div className="self-stretch font-medium text-base text-[#000000]">
+                          {selectedTemplateForModal.description}
                         </div>
                       </div>
 
-                      <div className="self-stretch font-medium text-base text-[#000000]">
-                        템플릿 명
+                      <div className="flex flex-col items-start justify-center gap-3 pt-0 pb-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
+                        <p className="relative self-stretch mt-[-1.00px] text-sm">
+                          <span className="text-[#959dae]">크기:</span>
+                          <span className="text-[#000000]"> {selectedTemplateForModal.attributes.size}</span>
+                        </p>
+
+                        <p className="relative self-stretch text-sm">
+                          <span className="text-[#959dae]">목적: </span>
+                          <span className="text-[#000000]">{selectedTemplateForModal.attributes.purpose}</span>
+                        </p>
+
+                        <p className="relative self-stretch text-sm">
+                          <span className="text-[#959dae]">형태: </span>
+                          <span className="text-[#000000]">{selectedTemplateForModal.attributes.shape}</span>
+                        </p>
+
+                        <p className="relative self-stretch text-sm">
+                          <span className="text-[#959dae]">키워드:</span>
+                          <span className="text-[#000000]"> {selectedTemplateForModal.attributes.keywords.join(', ')}</span>
+                        </p>
                       </div>
                     </div>
+                  </div>
 
-                    <div className="flex flex-col items-start justify-center gap-3 pt-0 pb-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
-                      <p className="relative self-stretch mt-[-1.00px] text-sm">
-                        <span className="text-[#959dae]">면적:</span>
-                        <span className="text-[#000000]"> 108sqm (소형)</span>
-                      </p>
-
-                      <p className="relative self-stretch text-sm">
-                        <span className="text-[#959dae]">구조: </span>
-                        <span className="text-[#000000]">곡선형 리깅 · 타워</span>
-                      </p>
-
-                      <p className="relative self-stretch text-sm">
-                        <span className="text-[#959dae]">플랫폼 높이: </span>
-                        <span className="text-[#000000]">5cm</span>
-                      </p>
-
-                      <p className="relative self-stretch text-sm">
-                        <span className="text-[#959dae]">경사로:</span>
-                        <span className="text-[#000000]"> 2개, 경사도 1/12</span>
-                      </p>
-
-                      <p className="relative self-stretch text-sm">
-                        <span className="text-[#959dae]">가구:</span>
-                        <span className="text-[#000000]"> 의자(4), 테이블(1), 카운터(1)</span>
-                      </p>
+                  <button 
+                    className="flex items-center justify-center gap-2.5 px-[22px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-[#1662ef] rounded-[99999px] hover:bg-[#1255d4] transition-colors"
+                    onClick={() => handleStartWithTemplate(selectedTemplateForModal)}
+                  >
+                    <div className="w-fit mt-[-1.00px] font-medium text-sm text-white whitespace-nowrap">
+                      이 템플릿으로 시작하기
                     </div>
-                  </div>
+                  </button>
                 </div>
-
-                <button 
-                  className="flex items-center justify-center gap-2.5 px-[22px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-[#1662ef] rounded-[99999px] hover:bg-[#1255d4] transition-colors"
-                  onClick={() => handleStartWithTemplate('template-id-here')}
-                >
-                  <div className="w-fit mt-[-1.00px] font-medium text-sm text-white whitespace-nowrap">
-                    이 템플릿으로 시작하기
-                  </div>
-                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 };

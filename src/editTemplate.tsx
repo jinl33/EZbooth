@@ -1,10 +1,11 @@
-// src/EditTemplate.tsx
+// src/editTemplate.tsx
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Dropdown } from "./components/Dropdown";
 import { Regulation } from "./components/Regulation";
 import { TabNavigation } from "./components/TabNavigation";
 import { Export } from "./components/Export";
+// import Viewer from "./components/Viewer";
 
 // Import available images
 import symbol from "./images/symbol.png";
@@ -229,9 +230,11 @@ export const EditTemplate: React.FC = () => {
     e.stopPropagation(); // Prevent triggering the section expansion
     setIsRiggingEnabled(!isRiggingEnabled);
   };
-
+  
+  // Get template data from location state
   const location = useLocation();
   const templateId = location.state?.templateId;
+  const templateImage = location.state?.templateImage;
 
   // Load template data based on templateId
   React.useEffect(() => {
@@ -1250,7 +1253,22 @@ export const EditTemplate: React.FC = () => {
       </div>
 
       {/* Main content area */}
-      <div className="absolute w-[1042px] h-[800px] top-[94px] left-[376px] rounded-2xl bg-[url('./images/sample.png')] bg-cover">
+      <div className="absolute w-[1042px] h-[800px] top-[94px] left-[376px] rounded-2xl">
+        {templateImage ? (
+          <div className="w-full h-full rounded-2xl overflow-hidden border border-solid border-[#bbc4d0] bg-white">
+            <img 
+              src={templateImage} 
+              alt="Template" 
+              className="w-full h-full object-cover"
+              style={{ objectPosition: 'center' }}
+            />
+          </div>
+        ) : (
+          <div className="w-full h-full rounded-2xl flex items-center justify-center bg-gray-100 border border-solid border-[#bbc4d0]">
+            <p className="text-gray-500">No template selected</p>
+          </div>
+        )}
+        
         {/* Regulation button */}
         <div className="inline-flex items-center justify-center gap-2.5 px-[22px] py-4 absolute top-[733px] left-[887px] bg-white rounded-[99999px]">
           <Regulation className="!relative !w-3.5 !h-3.5 mr-1" />
