@@ -142,6 +142,7 @@ export const StartPage: React.FC = () => {
 
                 <button 
                   type="button"
+                  onClick={() => window.open("https://blog.naver.com/ezbooth", "_blank")}
                   className="flex w-44 items-center justify-center gap-2.5 px-[26px] py-5 bg-white rounded-[99999px] border border-solid border-[#1662ef20] shadow-sm hover:shadow-md transition-shadow"
                 >
                   <span className="text-[#1662ef] whitespace-nowrap">
