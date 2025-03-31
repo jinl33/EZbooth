@@ -7,21 +7,21 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChooseTemplate } from './chooseTemplate';
 import { EditTemplate } from './editTemplate';  
+import SurveyPopup from './components/SurveyPopup';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
+      <SurveyPopup />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/choose-template" element={<ChooseTemplate />} />
         <Route path="/edit-template" element={<EditTemplate />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
 );
 
 reportWebVitals();

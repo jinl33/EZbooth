@@ -1,11 +1,11 @@
 // src/editTemplate.tsx
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Dropdown } from "./components/Dropdown";
 import { Regulation } from "./components/Regulation";
 import { TabNavigation } from "./components/TabNavigation";
 import { Export } from "./components/Export";
-// import Viewer from "./components/Viewer";
+
 
 // Import available images
 import symbol from "./images/symbol.png";
@@ -22,6 +22,9 @@ import image96 from "./images/image96.png";
 import image88 from "./images/image88.png";
 
 export const EditTemplate: React.FC = () => {
+  // Ref for the viewer
+  const viewerRef = useRef<{ updateModel: () => void }>(null);
+
   // State for title
   const [projectName, setProjectName] = useState("프로젝트 명");
 
@@ -236,13 +239,21 @@ export const EditTemplate: React.FC = () => {
   const templateId = location.state?.templateId;
   const templateImage = location.state?.templateImage;
 
+  
   // Load template data based on templateId
-  React.useEffect(() => {
-    if (templateId) {
-      // Fetch template data or load from cache
-      console.log(`Loading template ${templateId}`);
+  // React.useEffect(() => {
+  //   if (templateId) {
+  //     // Fetch template data or load from cache
+  //     console.log(`Loading template ${templateId}`);
+  //   }
+  // }, [templateId]);
+
+  // Use effect to synchronize dimensions with the 3D model
+  useEffect(() => {
+    if (viewerRef.current) {
+      viewerRef.current.updateModel();
     }
-  }, [templateId]);
+  }, [dimensions, wallConfig, isRiggingEnabled, riggingType]);
 
   // State for sections
   const [expandedSections, setExpandedSections] = useState({
@@ -1254,6 +1265,14 @@ export const EditTemplate: React.FC = () => {
 
       {/* Main content area */}
       <div className="absolute w-[1042px] h-[800px] top-[94px] left-[376px] rounded-2xl">
+      <div className="w-full h-full rounded-2xl overflow-hidden border border-solid border-[#bbc4d0] bg-white">
+        {/* <Viewer 
+          ref={viewerRef}
+          dimensions={dimensions}
+          wallConfig={wallConfig}
+          isRiggingEnabled={isRiggingEnabled}
+          riggingType={riggingType}
+        /> */}
         {templateImage ? (
           <div className="w-full h-full rounded-2xl overflow-hidden border border-solid border-[#bbc4d0] bg-white">
             <img 
@@ -1268,7 +1287,7 @@ export const EditTemplate: React.FC = () => {
             <p className="text-gray-500">No template selected</p>
           </div>
         )}
-        
+      </div>  
         {/* Regulation button */}
         <div className="inline-flex items-center justify-center gap-2.5 px-[22px] py-4 absolute top-[733px] left-[887px] bg-white rounded-[99999px]">
           <Regulation className="!relative !w-3.5 !h-3.5 mr-1" />
