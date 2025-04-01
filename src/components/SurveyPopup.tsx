@@ -1,7 +1,10 @@
 // src/components/SurveyPopup.tsx
 import React, { useState, useEffect } from "react";
+import { useTranslation, useLanguage } from "../LanguageContext";
 
 const SurveyPopup = (): JSX.Element | null => {
+  const { t } = useTranslation('survey');
+  const { language } = useLanguage(); // current language
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   
@@ -13,7 +16,7 @@ const SurveyPopup = (): JSX.Element | null => {
     
     console.log("SurveyPopup mounted, current count:", localStorage.getItem('buttonClickCount'));
     
-    // This function handles all button clicks on the page
+    // Handles all button clicks on the page
     function handleButtonClick(e: MouseEvent) {
       // Check if the clicked element is a button or inside a button
       const clickedElement = e.target as HTMLElement;
@@ -67,7 +70,12 @@ const SurveyPopup = (): JSX.Element | null => {
   };
 
   const handleOpenForm = () => {
-    window.open("https://forms.gle/GX2YGjdx8R4eog1E8", "_blank");
+    // Use different form URLs based on language
+    const formUrl = language === 'en' 
+      ? "https://forms.gle/SenpFfwh62DrhatH7"  // English form
+      : "https://forms.gle/GX2YGjdx8R4eog1E8"; // Korean form
+    
+    window.open(formUrl, "_blank");
   };
 
   if (!isAnimating && !isOpen) return null;
@@ -91,13 +99,13 @@ const SurveyPopup = (): JSX.Element | null => {
         <div className="survey-popup flex flex-col w-[587px] items-center gap-9 absolute top-16 left-[86px]">
           <div className="survey-popup flex flex-col items-center gap-6 relative self-stretch w-full flex-[0_0_auto]">
             <p className="survey-popup relative self-stretch h-[33px] mt-[-1.00px] [font-family:'Pretendard-Bold',Helvetica] font-bold text-[#1662ef] text-[29px] text-center tracking-[0] leading-[43.5px] whitespace-nowrap">
-              빠른 시일 내에 곧 만나요!
+              {t("빠른 시일 내에 곧 만나요!")}
             </p>
 
             <p className="survey-popup relative self-stretch h-[59px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-[#949494] text-xl text-center tracking-[0] leading-[30px]">
-              EZbooth 서비스 출시 소식을 가장 먼저 받아보세요.
+              {t("EZbooth 서비스 출시 소식을 가장 먼저 받아보세요.")}
               <br />
-              사전 알림을 신청하시면 런칭 소식을 빠르게 전해드립니다!
+              {t("사전 알림을 신청하시면 런칭 소식을 빠르게 전해드립니다!")}
             </p>
           </div>
 
@@ -106,7 +114,7 @@ const SurveyPopup = (): JSX.Element | null => {
             className="survey-popup inline-flex items-center justify-center gap-2.5 px-[39px] py-[18px] relative flex-[0_0_auto] bg-[#1662ef] rounded-[40px] hover:bg-[#1255d4] transition-colors"
           >
             <div className="survey-popup relative w-fit mt-[-1.00px] [font-family:'Pretendard-SemiBold',Helvetica] font-semibold text-white text-xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-              런칭 사전 알림 신청하기
+              {t("런칭 사전 알림 신청하기")}
             </div>
           </button>
         </div>

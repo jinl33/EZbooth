@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+import LanguageToggle from "./components/LanguageToggle";
+import { useTranslation, useLanguage } from "./LanguageContext";
+
+// images
 import logo from "./images/logo.png";
 import image1 from "./images/image.png";
 import image2 from "./images/image.svg";
@@ -21,8 +25,6 @@ import temp12 from "./images/temp12.png";
 // Template interface for type safety
 interface Template {
   id: string;
-  // name: string;
-  description: string;
   attributes: {
     size: string;
     purpose: string;
@@ -31,9 +33,36 @@ interface Template {
     color?: string;
   };
   image: string;
+  // technical specifications
+  specs?: {
+    dimension: string;
+    layout: string;
+    structure: string;
+    platformHeight?: string;
+    slope?: string;
+    furniture?: string;
+    [key: string]: string | undefined;
+  };
 }
 
 export const ChooseTemplate: React.FC = () => {
+  const { t } = useTranslation('chooseTemplate');
+  const { language } = useLanguage();
+
+  // Helper function to generate description from attributes
+  const getTemplateDescription = (template: Template): string => {
+    // Build the description with translated parts
+    const parts = [
+      t(template.attributes.size),
+      t(template.attributes.purpose), 
+      t(template.attributes.shape),
+      ...template.attributes.keywords.map(kw => t(kw))
+    ];
+    
+    // Join with center dot and space
+    return parts.join(' · ');
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     size: "",
@@ -47,31 +76,43 @@ export const ChooseTemplate: React.FC = () => {
   const templateData: Template[] = [
     {
       id: "template-1",
-      description: "중형 · 미팅형 · 3면 오픈 · 모던한 · 직선의 · 복층",
       attributes: {
         size: "중형",
         purpose: "미팅형", 
         shape: "3면 오픈",
         keywords: ["모던한", "직선의", "복층"],
       },
-      image: temp1
+      image: temp1,
+      specs: {
+        dimension: "108sqm (Medium)",
+        layout: "3-Sided-Open",
+        structure: "Linear Rigging/Double Floor",
+        platformHeight: "5cm",
+        slope: "2ea, Slope Angle 1/12",
+        furniture: "Chair(4), Table(1), Counter(1)"
+      }
     },
     // Second template
     {
       id: "template-2",
-      description: "소형 · 전시형 · 2면 오픈 · 컬러풀한 · 직선의",
       attributes: {
         size: "소형",
         purpose: "전시형",
         shape: "2면 오픈",
         keywords: ["컬러풀한", "직선의"],
       },
-      image: temp2
+      image: temp2,
+      specs: {
+        dimension: "36sqm (Small)",
+        layout: "2-Sided-Open",
+        structure: "Linear Structure/Single Floor",
+        platformHeight: "5cm",
+        furniture: "Display Shelf(4), Counter(1)"
+      }
     },
     // Template 3
     {
       id: "template-3",
-      description: "소형 · 미팅형 · 2면 오픈 · 모던한 · 직선의 · 패브릭마감",
       attributes: {
         size: "소형",
         purpose: "미팅형",
@@ -83,7 +124,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 4
     {
       id: "template-4",
-      description: "소형 · 전시형 · 2면 오픈 · 모던한 · 직선의 · 그래픽",
       attributes: {
         size: "소형",
         purpose: "전시형",
@@ -95,7 +135,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 5
     {
       id: "template-5",
-      description: "중형 · 전시/미팅형 · 2면 오픈 · 모던한 · 직선의 · 복층",
       attributes: {
         size: "중형",
         purpose: "전시/미팅형",
@@ -107,7 +146,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 6
     {
       id: "template-6",
-      description: "중형 · 전시/미팅형 · 2면 오픈 · 모던한 · 직선의",
       attributes: {
         size: "중형",
         purpose: "전시/미팅형",
@@ -119,10 +157,9 @@ export const ChooseTemplate: React.FC = () => {
     // Template 7
     {
       id: "template-7",
-      description: "중형 · 시연형 · 2면 오픈 · 컨츄리풍의 · 직선의",
       attributes: {
         size: "중형",
-        purpose: "시연형",
+        purpose: "전시형",
         shape: "2면 오픈",
         keywords: ["컨츄리풍의", "직선의"],
       },
@@ -131,7 +168,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 8
     {
       id: "template-8",
-      description: "중형 · 전시/미팅형 · 2면 오픈 · 자연친화적인 · 직선의",
       attributes: {
         size: "중형",
         purpose: "전시/미팅형",
@@ -143,7 +179,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 9
     {
       id: "template-9",
-      description: "중형 · 전시형 · 3면 오픈 · 모던한 · 직선의 · lED",
       attributes: {
         size: "중형",
         purpose: "전시형",
@@ -155,7 +190,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 10
     {
       id: "template-10",
-      description: "중형 · 전시형 · 2면 오픈 · 자연친화적인 · 직선의",
       attributes: {
         size: "중형",
         purpose: "전시형",
@@ -167,7 +201,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 11
     {
       id: "template-11",
-      description: "중형 · 전시형 · 2면 오픈 · 모던한 · 직선의 · 라이팅",
       attributes: {
         size: "중형",
         purpose: "전시형",
@@ -179,7 +212,6 @@ export const ChooseTemplate: React.FC = () => {
     // Template 12
     {
       id: "template-12",
-      description: "소형 · 전시형 · 2면 오픈 · 모던한 · 직선의 · 라이팅",
       attributes: {
         size: "소형",
         purpose: "전시형",
@@ -205,15 +237,15 @@ export const ChooseTemplate: React.FC = () => {
   
   // Keyword options organized by rows for layout
   const keywordRows = [
-    ["곡선의", "직선의", "복층", "단층"],
-    ["모던한", "비대칭", "깔끔한", "화려한"],
-    ["테크", "목재"]
+    [t("곡선의"), t("직선의"), t("복층"), t("단층")],
+    [t("모던한"), t("비대칭"), t("깔끔한"), t("화려한")],
+    [t("테크"), t("목재")]
   ];
 
   // Options for each dropdown
-  const sizeOptions = ["소형", "중형", "대형"];
-  const purposeOptions = ["미팅형", "전시형", "미팅+전시형"];
-  const shapeOptions = ["1면 오픈", "2면 오픈", "3면 오픈", "4면 오픈"];
+  const sizeOptions = [t("소형"), t("중형"), t("대형")];
+  const purposeOptions = [t("미팅형"), t("전시형"), t("미팅+전시형")];
+  const shapeOptions = [t("1면 오픈"), t("2면 오픈"), t("3면 오픈"), t("4면 오픈")];
 
   // State for modalcomponent
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -260,13 +292,15 @@ export const ChooseTemplate: React.FC = () => {
     };
   }, [showColorWheel]);
 
-  // Search functionality - filter templates based on search term and filters
+  // Update the search functionality to work with our dynamic descriptions
   useEffect(() => {
     const filtered = templateData.filter(template => {
-      // Search by term in name or description
+      // Generate the description for searching
+      const description = getTemplateDescription(template);
+      
+      // Search by term in description
       const matchesSearchTerm = !searchTerm || 
-        // template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        template.description.toLowerCase().includes(searchTerm.toLowerCase());
+        description.toLowerCase().includes(searchTerm.toLowerCase());
       
       // Filter by size
       const matchesSize = !filters.size || template.attributes.size === filters.size;
@@ -403,60 +437,121 @@ export const ChooseTemplate: React.FC = () => {
                 src={logo}
               />
             </div>
-            <div className="relative w-6 h-6 bg-[#1662ef] rounded-xl" />
+            <div className="relative w-6 h-6" >
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* Main heading */}
           <div className="flex justify-center mt-16">
-            <div className="inline-flex items-center gap-2.5">
-              <img
-                className="w-[121.65px] h-[30px]"
-                alt="Group"
-                src={logo}
-              />
-              <h1 className="font-semibold text-[#545d6c] text-[32px] leading-8 whitespace-nowrap">
-                템플릿과 함께 더욱 쉽고 빠르게 부스를 디자인 해보세요!
+            {language === 'ko' ? (
+              <div className="inline-flex items-center gap-2.5">
+                <img
+                  className="w-[121.65px] h-[30px]"
+                  alt="Group"
+                  src={logo}
+                />
+                <h1 className="font-semibold text-[#545d6c] text-[32px] leading-8 whitespace-nowrap">
+                  {t("템플릿과 함께 더욱 쉽고 빠르게 부스를 디자인 해보세요!")}
+                </h1>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-2.5">
+              <div className="flex items-center justify-center">
+                <h1 className="font-semibold text-[#545d6c] text-[32px] leading-8">
+                  With
+                </h1>
+                <div className="flex items-center mx-2">
+                  <img
+                    className="w-[121.65px] h-[30px]"
+                    alt="Group"
+                    src={logo}
+                  />
+                </div>
+                <h1 className="font-semibold text-[#545d6c] text-[32px] leading-8">
+                  Templates,
+                </h1>
+              </div>
+              <h1 className="font-semibold text-[#545d6c] text-[32px] leading-8 text-center">
+                Design Your Booth Even Easier And Faster
               </h1>
             </div>
+            )}
           </div>
-
-          {/* Feature cards - Updated with #e2edff background and bolder border */}
+          {/* Feature cards */}
           <div className="flex justify-center mt-16 space-x-4">
             <div className="inline-flex flex-col items-center justify-center gap-2.5 px-6 py-5 rounded-[10px] bg-[#e2edff] border-1 shadow-md"> 
               <div className="inline-flex flex-col items-center gap-3.5">
                 <img className="w-9 h-9" alt="Search icon" src={image1} />
-                <div className="inline-flex flex-col items-start gap-1">
-                  <p className="self-stretch font-semibold text-xs text-center leading-3">
-                    <span className="text-[#1662ef]">검색 필터</span>
-                    <span className="text-[#000000]">
-                      를 통해
-                      <br />
-                    </span>
-                  </p>
-                  <p className="self-stretch font-semibold text-xs text-center leading-3">
-                    <span className="text-[#000000]">
-                      원하는 템플릿을 찾아보세요!
-                    </span>
-                  </p>
-                </div>
+                {language === 'ko' ? (
+                  // Korean version
+                  <div className="inline-flex flex-col items-start gap-1">
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#1662ef]">{t("검색 필터")}</span>
+                      <span className="text-[#000000]">
+                        {t("를 통해")}
+                        <br />
+                      </span>
+                    </p>
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#000000]">
+                        {t("원하는 템플릿을 찾아보세요!")}
+                      </span>
+                    </p>
+                  </div>
+                ) : (
+                  // English version
+                  <div className="inline-flex flex-col items-center gap-1">
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#000000]">
+                        Find Your Perfect Template
+                        <br />
+                      </span>
+                    </p>
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#000000]">Using </span>
+                      <span className="text-[#1662ef]">Search Filters</span>
+                      <span className="text-[#000000]">!</span>
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="inline-flex flex-col items-center justify-center gap-2.5 px-6 py-5 rounded-[10px] bg-[#e2edff] border-1 shadow-md">
               <div className="inline-flex flex-col items-center gap-3.5">
                 <img className="w-9 h-9" alt="Template icon" src={image2} />
-                <div className="inline-flex flex-col items-start gap-1">
-                  <p className="self-stretch font-semibold text-xs text-center leading-3">
-                    <span className="text-[#000000]">
-                      템플릿을 통해
-                      <br />
-                    </span>
-                  </p>
-                  <p className="self-stretch font-semibold text-xs text-center leading-3">
-                    <span className="text-[#1662ef]">초심자도 편리한</span>
-                    <span className="text-[#000000]"> 부스 디자인!</span>
-                  </p>
-                </div>
+                {language === 'ko' ? (
+                  // Korean version
+                  <div className="inline-flex flex-col items-start gap-1">
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#000000]">
+                        {t("템플릿을 통해")}
+                        <br />
+                      </span>
+                    </p>
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#1662ef]">{t("초심자도 편리한")}</span>
+                      <span className="text-[#000000]"> {t("부스 디자인!")}</span>
+                    </p>
+                  </div>
+                ) : (
+                  // English version
+                  <div className="inline-flex flex-col items-center gap-1">
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#000000]">
+                        Easy Booth Design
+                        <br />
+                      </span>
+                    </p>
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#1662ef]">—Even For beginners—</span>
+                    </p>
+                    <p className="self-stretch font-semibold text-xs text-center leading-3">
+                      <span className="text-[#000000]">With Templates!</span>
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -479,7 +574,7 @@ export const ChooseTemplate: React.FC = () => {
                   }}
                 >
                   <span className="text-[#000000] text-sm whitespace-nowrap">
-                    {filters.size || "크기"}
+                    {filters.size || t("크기")}
                   </span>
                   <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.5 4.5L6 8L2.5 4.5" stroke="#606E7E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -518,7 +613,7 @@ export const ChooseTemplate: React.FC = () => {
                   }}
                 >
                   <span className="text-[#000000] text-sm whitespace-nowrap">
-                    {filters.purpose || "목적"}
+                    {filters.purpose || t("목적")}
                   </span>
                   <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.5 4.5L6 8L2.5 4.5" stroke="#606E7E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -557,7 +652,7 @@ export const ChooseTemplate: React.FC = () => {
                   }}
                 >
                   <span className="text-[#000000] text-sm whitespace-nowrap">
-                    {filters.shape || "형태"}
+                    {filters.shape || t("형태")}
                   </span>
                   <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.5 4.5L6 8L2.5 4.5" stroke="#606E7E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -598,7 +693,7 @@ export const ChooseTemplate: React.FC = () => {
                   {colorFilter ? (
                     <div className="w-5 h-5 rounded-full" style={{ background: colorFilter }}></div>
                   ) : (
-                    <span className="text-[#000000] text-sm whitespace-nowrap">색상</span>
+                    <span className="text-[#000000] text-sm whitespace-nowrap">{t("색상")}</span>
                   )}
                   <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.5 4.5L6 8L2.5 4.5" stroke="#606E7E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -686,7 +781,7 @@ export const ChooseTemplate: React.FC = () => {
                         )}
                       </div>
                     ) : (
-                      <span className="text-[#000000] text-sm whitespace-nowrap">키워드</span>
+                      <span className="text-[#000000] text-sm whitespace-nowrap">{t("키워드")}</span>
                     )}
                   </div>
                   <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -727,7 +822,7 @@ export const ChooseTemplate: React.FC = () => {
                 <input
                   type="text"
                   className="w-full text-sm outline-none"
-                  placeholder="원하는 검색어를 입력해 주세요."
+                  placeholder={t("원하는 검색어를 입력해 주세요.")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -747,7 +842,7 @@ export const ChooseTemplate: React.FC = () => {
         <div className="px-[60px] mt-8">
           {filteredTemplates.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16">
-              <p className="text-lg text-gray-500">검색 결과가 없습니다.</p>
+              <p className="text-lg text-gray-500">{t("검색 결과가 없습니다.")}</p>
               <button 
                 onClick={() => {
                   setSearchTerm('');
@@ -757,7 +852,7 @@ export const ChooseTemplate: React.FC = () => {
                 }}
                 className="mt-4 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition"
               >
-                필터 초기화
+                {t("필터 초기화")}
               </button>
             </div>
           ) : (
@@ -784,7 +879,7 @@ export const ChooseTemplate: React.FC = () => {
                           className="flex items-center justify-center gap-2.5 px-[22px] py-4 w-full bg-[#1662ef] rounded-[99999px] border border-solid hover:bg-[#1255d4] transition-colors shadow-lg"
                         >
                           <span className="text-white text-sm whitespace-nowrap">
-                            이 템플릿으로 시작하기
+                            {t("이 템플릿으로 시작하기")}
                           </span>
                         </button>
 
@@ -793,18 +888,15 @@ export const ChooseTemplate: React.FC = () => {
                           className="flex items-center justify-center gap-2.5 px-[22px] py-4 w-full bg-[#000000cc] rounded-[99999px] border border-solid border-[#000000] hover:bg-black transition-colors shadow-lg"
                         >
                           <span className="text-white text-sm whitespace-nowrap">
-                            자세히 보기
+                            {t("자세히 보기")}
                           </span>
                         </button>
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col items-start gap-1.5 w-full">
-                    {/* <div className="font-semibold text-[#000000] text-base"> */}
-                      {/* {template.name} */}
-                    {/* </div> */}
                     <p className="font-14-semibold font-[number:var(--14-semibold-font-weight)] text-[#000000] text-[length:var(--14-semibold-font-size)] tracking-[number:var(--14-semibold-letter-spacing)] leading-[number:var(--14-semibold-line-height)] [font-style:var(--14-semibold-font-style)]">
-                      {template.description}
+                      {getTemplateDescription(template)}
                     </p>
                   </div>
                 </div>
@@ -812,8 +904,7 @@ export const ChooseTemplate: React.FC = () => {
             </div>
           )}
         </div>
-        
-        {/* Add some bottom padding */}
+        {/* Bottom padding */}
         <div className="h-[100px]"></div>
       </div>
       {/* Modal Overlay */}
@@ -829,7 +920,7 @@ export const ChooseTemplate: React.FC = () => {
                 <div className="flex items-center justify-between px-2.5 py-[22px] relative self-stretch w-full flex-[0_0_auto]">
                   <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                     <div className="w-fit mt-[-1.00px] font-semibold text-[#1662ef] text-xl text-left leading-5 whitespace-nowrap relative tracking-[0]">
-                      템플릿 상세정보
+                      {t("템플릿 상세정보")}
                     </div>
                   </div>
 
@@ -846,7 +937,7 @@ export const ChooseTemplate: React.FC = () => {
                 <div className="relative self-stretch w-full h-px bg-gray-200"></div>
               </div>
 
-              <div className="flex w-[700px] items-center gap-6 relative flex-[0_0_auto]">
+              <div className="flex w-[700px] items-start gap-6 relative flex-[0_0_auto]">
                 {/* Display selected template image */}
                 <div 
                   className="flex flex-col w-[430px] h-[310.28px] items-end justify-end gap-2.5 p-2.5 relative rounded-lg bg-cover bg-center" 
@@ -866,37 +957,55 @@ export const ChooseTemplate: React.FC = () => {
                           {selectedTemplateForModal.attributes.keywords.slice(0, 2).map((keyword, index) => (
                             <div key={index} className="inline-flex items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] bg-white rounded-full border border-solid border-[#bbc4d0]">
                               <div className="relative w-fit mt-[-1.00px] text-xs text-[#000000] whitespace-nowrap">
-                                {keyword}
+                                {t(keyword)}
                               </div>
                             </div>
                           ))}
                         </div>
-
-                        <div className="self-stretch font-medium text-base text-[#000000]">
-                          {selectedTemplateForModal.description}
-                        </div>
                       </div>
-
+                      {/* Template Details */}
                       <div className="flex flex-col items-start justify-center gap-3 pt-0 pb-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
-                        <p className="relative self-stretch mt-[-1.00px] text-sm">
-                          <span className="text-[#959dae]">크기:</span>
-                          <span className="text-[#000000]"> {selectedTemplateForModal.attributes.size}</span>
-                        </p>
-
-                        <p className="relative self-stretch text-sm">
-                          <span className="text-[#959dae]">목적: </span>
-                          <span className="text-[#000000]">{selectedTemplateForModal.attributes.purpose}</span>
-                        </p>
-
-                        <p className="relative self-stretch text-sm">
-                          <span className="text-[#959dae]">형태: </span>
-                          <span className="text-[#000000]">{selectedTemplateForModal.attributes.shape}</span>
-                        </p>
-
-                        <p className="relative self-stretch text-sm">
-                          <span className="text-[#959dae]">키워드:</span>
-                          <span className="text-[#000000]"> {selectedTemplateForModal.attributes.keywords.join(', ')}</span>
-                        </p>
+                        {selectedTemplateForModal.specs?.dimension && (
+                          <p className="relative self-stretch text-sm">
+                            <span className="text-[#959dae]">{t("면적")}: </span>
+                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.dimension) : selectedTemplateForModal.specs.dimension}</span>
+                          </p>
+                        )}
+                        
+                        {selectedTemplateForModal.specs?.layout && (
+                          <p className="relative self-stretch text-sm">
+                            <span className="text-[#959dae]">{t("배치")}: </span>
+                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.layout) : selectedTemplateForModal.specs.layout}</span>
+                          </p>
+                        )}
+                        
+                        {selectedTemplateForModal.specs?.structure && (
+                          <p className="relative self-stretch text-sm">
+                            <span className="text-[#959dae]">{t("구조")}: </span>
+                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.structure) : selectedTemplateForModal.specs.structure}</span>
+                          </p>
+                        )}
+                        
+                        {selectedTemplateForModal.specs?.platformHeight && (
+                          <p className="relative self-stretch text-sm">
+                            <span className="text-[#959dae]">{t("플랫폼 높이")}: </span>
+                            <span className="text-[#000000]">{selectedTemplateForModal.specs.platformHeight}</span>
+                          </p>
+                        )}
+                        
+                        {selectedTemplateForModal.specs?.slope && (
+                          <p className="relative self-stretch text-sm">
+                            <span className="text-[#959dae]">{t("경사로")}: </span>
+                            <span className="text-[#000000]">{selectedTemplateForModal.specs.slope}</span>
+                          </p>
+                        )}
+                        
+                        {selectedTemplateForModal.specs?.furniture && (
+                          <p className="relative self-stretch text-sm">
+                            <span className="text-[#959dae]">{t("가구")}: </span>
+                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.furniture) : selectedTemplateForModal.specs.furniture}</span>
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -906,7 +1015,7 @@ export const ChooseTemplate: React.FC = () => {
                     onClick={() => handleStartWithTemplate(selectedTemplateForModal)}
                   >
                     <div className="w-fit mt-[-1.00px] font-medium text-sm text-white whitespace-nowrap">
-                      이 템플릿으로 시작하기
+                      {t("이 템플릿으로 시작하기")}
                     </div>
                   </button>
                 </div>

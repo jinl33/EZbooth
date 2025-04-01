@@ -1,6 +1,10 @@
 // src/StartPage.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LanguageToggle from "./components/LanguageToggle";
+import { useTranslation, useLanguage } from "./LanguageContext";
+
+// images
 import leftback from "./images/leftback.png";
 import rightback from "./images/rightback.png";
 import ellipse774 from "./images/ellipse-774.svg";
@@ -19,6 +23,8 @@ import icon3 from "./images/icon3.svg";
 export const StartPage: React.FC = () => {
   const navigate = useNavigate();
   const [slidePosition, setSlidePosition] = useState(0);
+  const { t, renderHTML } = useTranslation('startPage');
+  const { language } = useLanguage();
 
   // Sliding animation for section 2
   useEffect(() => {
@@ -55,7 +61,9 @@ export const StartPage: React.FC = () => {
                 src={logo}
               />
             </div>
-            <div className="relative w-6 h-6 bg-[#1662ef] rounded-xl" />
+            <div className="relative w-6 h-6" >
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* First section content */}
@@ -119,13 +127,13 @@ export const StartPage: React.FC = () => {
             <div className="flex flex-col items-center justify-center px-[60px] pt-[150px] relative z-10">
               <div className="flex flex-col items-center gap-[50px] max-w-[800px] w-full">
                 <p className="font-bold text-[#000000] text-[70px] text-center tracking-[0.70px] leading-[81.2px]">
-                  Make your Booth EZ,
+                  {t("Make your Booth EZ,")}
                   <br />
-                  Make your Business EZ!
+                  {t("Make your Business EZ!")}
                 </p>
 
                 <p className="font-semibold text-[#8896a5] text-xl text-center tracking-[0] leading-[26.0px]">
-                  EZbooth로 여러분의 부스를 자유롭게 디자인해보세요
+                  {t("EZbooth로 여러분의 부스를 자유롭게 디자인해보세요")}
                 </p>
               </div>
 
@@ -136,7 +144,7 @@ export const StartPage: React.FC = () => {
                   className="flex w-44 items-center justify-center gap-2.5 px-[26px] py-5 bg-[#1662ef] rounded-[99999px] cursor-pointer hover:bg-[#1255d4] transition-colors"
                 >
                   <span className="text-white whitespace-nowrap">
-                    이지부스 사용해보기
+                    {t("이지부스 사용해보기")}
                   </span>
                 </button>
 
@@ -146,7 +154,7 @@ export const StartPage: React.FC = () => {
                   className="flex w-44 items-center justify-center gap-2.5 px-[26px] py-5 bg-white rounded-[99999px] border border-solid border-[#1662ef20] shadow-sm hover:shadow-md transition-shadow"
                 >
                   <span className="text-[#1662ef] whitespace-nowrap">
-                    블로그 방문하기
+                    {t("블로그 방문하기")}
                   </span>
                 </button>
               </div>
@@ -175,18 +183,27 @@ export const StartPage: React.FC = () => {
             <div className="font-semibold text-[#000000] text-xl text-center tracking-[0] leading-[26.0px]">
               Design Anytime, Anywhere
             </div>
-
             <div className="flex flex-col items-center gap-3.5 w-full">
               <p className="font-semibold text-3xl leading-[39.0px] text-center tracking-[0]">
-                <span className="text-[#1662ef]">
-                  어디서든 쉽고 빠르게,
-                </span>
-                <br />
-                <span className="text-[#000000] inline-block">원하는 부스를 디자인하세요</span>
+                {language === 'ko' ? (
+                  <>
+                    <span className="text-[#1662ef]">
+                      {t("어디서든 쉽고 빠르게,")}
+                    </span>
+                    <br />
+                    <span className="text-[#000000] inline-block">
+                      {t("원하는 부스를 디자인하세요")}
+                    </span>
+                  </>
+                ) : (
+                  <span 
+                    className="text-[#000000] inline-block"
+                    dangerouslySetInnerHTML={renderHTML("원하는 부스를 디자인하세요")}
+                  />
+                )}
               </p>
-
               <p className="font-medium text-[#8896a5] text-base leading-4 text-center tracking-[0]">
-                EZbooth로 만드는 평균 디자인 소요 시간 5분
+                {t("EZbooth로 만드는 평균 디자인 소요 시간 5분")}
               </p>
             </div>
           </div>
@@ -247,19 +264,24 @@ export const StartPage: React.FC = () => {
             <div className="font-semibold text-[#000000] text-xl text-center tracking-[0] leading-[26.0px]">
               Collaborate Without Limits
             </div>
-
             <div className="flex flex-col items-center gap-3.5 w-full">
               <p className="font-semibold text-3xl leading-[39.0px] text-center tracking-[0]">
-                <span className="text-[#1662ef]">
-                  실시간으로 소통하며
-                </span>
-                <br />
-                <span className="text-[#000000] inline-block">더 나은 디자인을 완성하세요</span>
+              {language === 'ko' ? (
+                <>
+                  <span className="text-[#1662ef]">
+                    {t("실시간으로 소통하며")}
+                  </span>
+                  <br />
+                  <span className="text-[#000000] inline-block">{t("더 나은 디자인을 완성하세요")}</span>
+                </>
+              ) : (
+                <span className="text-[#1662ef] inline-block">{t("실시간으로 소통하며")}</span>
+              )}
               </p>
-
-              <span className="font-medium text-[#8896a5] text-base text-center tracking-[0]" style={{ lineHeight: '1.5' }}>
-                클라이언트부터 팀원까지, 
-                <br />하나의 윈도우에서 피드백 및 디자인 수정 가능
+              <span className="font-medium text-[#8896a5] text-base text-center tracking-[0]" style={{ lineHeight: '1.5'}}>
+                {t("클라이언트부터 팀원까지,")} 
+                <br />
+                {t("하나의 윈도우에서 피드백 및 디자인 수정 가능")}
               </span>
             </div>
           </div>
@@ -318,7 +340,7 @@ export const StartPage: React.FC = () => {
 
                     <div className="inline-flex items-start gap-1.5 relative flex-[0_0_auto]">
                       <p className="relative w-[215px] mt-[-0.83px] font-normal text-[#5d759e] text-xs text-center tracking-[0] leading-[16.6px]">
-                        기획자와 디자이너가 같은 플랫폼에서 작업하며 원할하게 소통하고 효율적으로 협업할 수 있습니다.
+                        {t("기획자와 디자이너가 같은 플랫폼에서 작업하며 원할하게 소통하고 효율적으로 협업할 수 있습니다.")}
                       </p>
                     </div>
                   </div>
@@ -347,7 +369,7 @@ export const StartPage: React.FC = () => {
 
                     <div className="inline-flex items-start gap-1.5 relative flex-[0_0_auto]">
                       <p className="relative w-[200px] mt-[-0.83px] font-normal text-[#5d759e] text-xs text-center tracking-[0] leading-[16.6px]">
-                        모델링, 렌더링, 디자인 수정까지 여러 디자인 툴을 사용하지 않아도 하나의 시스템에서 해결이 가능합니다.
+                        {t("모델링, 렌더링, 디자인 수정까지 여러 디자인 툴을 사용하지 않아도 하나의 시스템에서 해결이 가능합니다.")}
                       </p>
                     </div>
                   </div>
@@ -376,7 +398,7 @@ export const StartPage: React.FC = () => {
 
                     <div className="inline-flex items-start gap-1.5 relative flex-[0_0_auto]">
                       <p className="relative w-[203px] mt-[-0.83px] font-normal text-[#5d759e] text-xs text-center tracking-[0] leading-[16.6px]">
-                        클라이언트가 직접 디자인을 확인하고 피드백을 제공할 수 있어 수정 과정이 더욱 빠르고 간편해집니다.
+                        {t("클라이언트가 직접 디자인을 확인하고 피드백을 제공할 수 있어 수정 과정이 더욱 빠르고 간편해집니다.")}
                       </p>
                     </div>
                   </div>
@@ -390,7 +412,7 @@ export const StartPage: React.FC = () => {
                   className="flex w-44 items-center justify-center gap-2.5 px-[26px] py-5 bg-[#1662ef] rounded-[99999px] cursor-pointer hover:bg-[#1255d4] transition-colors"
                 >
                   <span className="text-white whitespace-nowrap">
-                    이지부스 사용해보기
+                    {t("이지부스 사용해보기")}
                   </span>
                 </button>
               </div>
