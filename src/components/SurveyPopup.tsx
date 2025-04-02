@@ -1,84 +1,138 @@
 // src/components/SurveyPopup.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation, useLanguage } from "../LanguageContext";
+import { useLocation } from "react-router-dom";
 
 const SurveyPopup = (): JSX.Element | null => {
   const { t } = useTranslation('survey');
-  const { language } = useLanguage(); // current language
+  const { language } = useLanguage();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  // Use ref to prevent duplicate event listeners
+  const clickHandlerRef = useRef<((e: MouseEvent) => void) | null>(null);
+  
+  // Check if current page is an edit template page
+  const isEditTemplatePage = (): boolean => {
+    const path = window.location.pathname;
+    const isEdit = path.includes('/edit-template') || 
+                  path.match(/\/templates\/[^/]+\/edit/) !== null;
+    
+    return isEdit;
+  };
   
   useEffect(() => {
-    // Initialize counter in localStorage if it doesn't exist
-    if (localStorage.getItem('buttonClickCount') === null) {
-      localStorage.setItem('buttonClickCount', '0');
+    // Skip if not on edit template page
+    if (!isEditTemplatePage()) {
+      console.log("Not on edit template page - survey disabled");
+      return;
     }
     
-    console.log("SurveyPopup mounted, current count:", localStorage.getItem('buttonClickCount'));
+    // Initialize counter if needed - Make sure this happens only once
+    if (localStorage.getItem('buttonClickCount') === null) {
+      localStorage.setItem('buttonClickCount', '0');
+      console.log("Counter initialized at 0");
+    }
     
-    // Handles all button clicks on the page
+    const count = localStorage.getItem('buttonClickCount') || '0';
+    console.log(`Survey tracking active, current count: ${count}`);
+    
+    // Button click handler
     function handleButtonClick(e: MouseEvent) {
-      // Check if the clicked element is a button or inside a button
       const clickedElement = e.target as HTMLElement;
       const button = clickedElement.closest('button') || 
-                     (clickedElement.tagName === 'BUTTON' ? clickedElement : null);
+                    (clickedElement.tagName === 'BUTTON' ? clickedElement : null);
       
-      // Only proceed if a button was clicked
+      // Skip if not a button
       if (!button) return;
       
-      // Don't count clicks on the survey popup itself
-      if (button.closest('.survey-popup')) {
-        console.log("Button in popup clicked - ignoring");
+      // Check if button is part of any popup/modal
+      const isInPopup = 
+        // Our own survey popup
+        button.closest('.survey-popup') ||
+        // Common popup/modal classes
+        button.closest('.modal') ||
+        button.closest('.popup') ||
+        button.closest('[role="dialog"]') ||
+        // Detect by z-index (most modals use high z-index)
+        isHighZIndexElement(button) ||
+        // Other app-specific popup classes
+        button.closest('.regulation-popup') ||
+        button.closest('.MuiDialog-root');
+      
+      if (isInPopup) {
+        console.log("Button in a popup/modal clicked - not counting");
         return;
       }
       
       // Get current count from localStorage
       const currentCount = parseInt(localStorage.getItem('buttonClickCount') || '0');
-      
-      // Increment the count
       const newCount = currentCount + 1;
       localStorage.setItem('buttonClickCount', newCount.toString());
       
       console.log(`Button clicked, count: ${newCount}`);
       
-      // Show popup when count reaches 5
+      // Show popup at threshold
       if (newCount >= 5) {
-        console.log("Count reached 5, showing popup");
+        console.log("Count reached 5, showing survey popup");
         setIsAnimating(true);
         setTimeout(() => setIsOpen(true), 50);
         
         // Reset counter
         localStorage.setItem('buttonClickCount', '0');
-        console.log("Counter reset to 0");
       }
     }
     
-    // Add event listener at the document level
+    // Helper to check if element has high z-index (likely a popup)
+    function isHighZIndexElement(element: HTMLElement): boolean {
+      let current = element;
+      while (current) {
+        const zIndex = window.getComputedStyle(current).zIndex;
+        if (zIndex !== 'auto' && parseInt(zIndex) > 10) {
+          return true;
+        }
+        current = current.parentElement as HTMLElement;
+        if (!current) break;
+      }
+      return false;
+    }
+    
+    // Clean up previous listener if it exists
+    if (clickHandlerRef.current) {
+      document.removeEventListener('click', clickHandlerRef.current, true);
+    }
+    
+    // Store the handler in a ref to clean it up later
+    clickHandlerRef.current = handleButtonClick;
+    
+    // Add event listener for click
     document.addEventListener('click', handleButtonClick, true);
     
-    // Clean up
     return () => {
-      document.removeEventListener('click', handleButtonClick, true);
+      if (clickHandlerRef.current) {
+        document.removeEventListener('click', clickHandlerRef.current, true);
+        clickHandlerRef.current = null;
+      }
+      console.log("Survey tracking stopped");
     };
-  }, []);
+  }, [location.pathname]);
+  
+  // Don't render anything if not on edit page or popup not triggered
+  if (!isEditTemplatePage() || (!isAnimating && !isOpen)) {
+    return null;
+  }
   
   const handleClose = () => {
     setIsAnimating(false);
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 300);
+    setTimeout(() => setIsOpen(false), 300);
   };
 
   const handleOpenForm = () => {
-    // Use different form URLs based on language
     const formUrl = language === 'en' 
-      ? "https://forms.gle/SenpFfwh62DrhatH7"  // English form
-      : "https://forms.gle/GX2YGjdx8R4eog1E8"; // Korean form
-    
+      ? "https://forms.gle/SenpFfwh62DrhatH7"
+      : "https://forms.gle/GX2YGjdx8R4eog1E8";
     window.open(formUrl, "_blank");
   };
-
-  if (!isAnimating && !isOpen) return null;
   
   return (
     <div 
