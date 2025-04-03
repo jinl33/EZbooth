@@ -1,9 +1,10 @@
 // src/components/Export.tsx
 import React, { useState } from 'react';
 import symbol from '../images/symbol1.png';
+import { useTranslation } from "../LanguageContext";
 
 type Tab = 'document' | 'format' | '3d';
-type FileSize = '고급' | '중간' | '기본';
+type FileSize = '고급' | '중간' | '기본' | 'Premium' | 'Medium' | 'Basic';
 type FileFormat = '.PDF' | '.DOCX' | '.TXT';
 
 interface DropdownProps {
@@ -62,18 +63,21 @@ const Dropdown: React.FC<DropdownProps> = ({ options, selectedOption, onSelect, 
 };
 
 export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
+  const { t } = useTranslation('export');
+  
   const [activeTab, setActiveTab] = useState<Tab>('document');
-  const [fileSize, setFileSize] = useState<FileSize>('고급');
+  // Use translation for initial state
+  const [fileSize, setFileSize] = useState<FileSize>(t('고급') as FileSize);
   const [fileFormat, setFileFormat] = useState<FileFormat>('.PDF');
   const [includeOption, setIncludeOption] = useState(false);
   
   const tabs = [
-    { id: 'document', label: '검색서' },
-    { id: 'format', label: '제안서' },
-    { id: 'file', label: '3D 파일' }
+    { id: 'document', label: t("검색서") },
+    { id: 'format', label: t("제안서") },
+    { id: 'file', label: t("3D 파일") }
   ];
   
-  const fileSizeOptions: FileSize[] = ['고급', '중간', '기본'];
+  const fileSizeOptions = [t("고급"), t("중간"), t("기본")];
   const fileFormatOptions: FileFormat[] = ['.PDF', '.DOCX', '.TXT'];
   
   const handleExport = () => {
@@ -92,13 +96,13 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   };
   
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/4 -translate-y-1/5 bg-white rounded-xl shadow- w-80 p-4 mr-50 border border-gray-300">
-      {/* Tab Bar */}
+    <div className="absolute left-1/2 transform -translate-x-1/4 -translate-y-1/5 bg-white rounded-xl shadow- w-96 p-4 mr-50 border border-gray-300">
+      {/* Tab Bar - increased width from w-80 to w-96 and added flex-1 to tabs */}
       <div className="flex mb-6 border-b border-gray-200">
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={`px-4 py-2 mr-2 cursor-pointer text-sm font-medium ${
+            className={`px-4 py-2 cursor-pointer text-sm font-medium flex-1 text-center whitespace-normal ${
               activeTab === tab.id ? 'text-blue-500 border-b-2 border-blue-500' : ''
             }`}
             onClick={() => setActiveTab(tab.id as Tab)}
@@ -106,14 +110,14 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
             {tab.label}
           </div>
         ))}
-        <div className="ml-auto cursor-pointer text-gray-500 text-base" onClick={handleClose}>
+        <div className="ml-2 cursor-pointer text-gray-500 text-base" onClick={handleClose}>
           ✕
         </div>
       </div>
       
       {/* File Size Dropdown */}
       <Dropdown
-        label="파일 크기"
+        label={t("파일 크기")}
         options={fileSizeOptions}
         selectedOption={fileSize}
         onSelect={(option) => setFileSize(option as FileSize)}
@@ -121,7 +125,7 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
       
       {/* File Format Dropdown */}
       <Dropdown
-        label="파일 형식"
+        label={t("파일 형식")}
         options={fileFormatOptions}
         selectedOption={fileFormat}
         onSelect={(option) => setFileFormat(option as FileFormat)}
@@ -129,7 +133,7 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
       
       {/* Checkbox Option */}
       <div className="mb-5">
-        <div className="text-sm text-gray-500 mb-2">재료포</div>
+        <div className="text-sm text-gray-500 mb-2">{t("재료포")}</div>
         <div className="flex items-center mt-2" onClick={() => setIncludeOption(!includeOption)}>
           <div className={`w-5 h-5 border border-gray-200 rounded cursor-pointer relative mr-2 ${
             includeOption ? 'bg-blue-500 border-blue-500' : ''
@@ -138,17 +142,17 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
               <span className="absolute inset-0 flex items-center justify-center text-white">✓</span>
             )}
           </div>
-          <div className="text-sm">전적서에 재료포 포함하기</div>
+          <div className="text-sm">{t("전적서에 재료포 포함하기")}</div>
         </div>
       </div>
       
       {/* Preview Button */}
       <div className="mb-5">
-        <div className="text-sm text-gray-500 mb-2">프리뷰</div>
+        <div className="text-sm text-gray-500 mb-2">{t("프리뷰")}</div>
         <button 
           className="w-[100px] px-4 py-2 rounded-full border border-gray-400 bg-white text-sm text-blue-500 font-medium cursor-pointer hover:bg-gray-50"
         >
-          Open
+          {t("Open")}
         </button>
       </div>
       
@@ -159,7 +163,7 @@ export const Export: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
           onClick={handleExport}
         >
           <img className="w-[13px] h-[13px]" alt="Logo" src={symbol} />
-          Export
+          {t("Export")}
         </button>
       </div>
     </div>

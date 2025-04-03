@@ -1,6 +1,7 @@
 // src/editTemplate.tsx
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "./LanguageContext";
 import { Dropdown } from "./components/Dropdown";
 import { Regulation } from "./components/Regulation";
 import { TabNavigation } from "./components/TabNavigation";
@@ -22,17 +23,19 @@ import image96 from "./images/image96.png";
 import image88 from "./images/image88.png";
 
 export const EditTemplate: React.FC = () => {
+  const { t, language} = useTranslation('editTemplate');
+
   // Ref for the viewer
   const viewerRef = useRef<{ updateModel: () => void }>(null);
 
   // State for title
-  const [projectName, setProjectName] = useState("프로젝트 명");
+  const [projectName, setProjectName] = useState(t("프로젝트 명"));
 
   // State for export button
   const [showExportModal, setShowExportModal] = useState(false);
 
   // State for active tab
-  const [activeTab, setActiveTab] = useState('구조');
+  const [activeTab, setActiveTab] = useState<string>(t('구조'));
   // State for unit
   const [unit, setUnit] = useState<'ft' | 'm'>('ft');
   
@@ -44,10 +47,20 @@ export const EditTemplate: React.FC = () => {
   });
 
   // State for furniture section
-  const [expandedFurnitureSections, setExpandedFurnitureSections] = useState({
-    set: true,
-    individual: false
-  });
+  const [expandedFurnitureSections, setExpandedFurnitureSections] = useState(() => ({
+    set: language === 'en',
+    individual: language === 'en'
+  }));
+
+  useEffect(() => {
+    if (language === 'en') {
+      setActiveTab("구조");
+      setExpandedFurnitureSections({
+        set: true,
+        individual: true
+      });
+    }
+  }, [language]);
 
   // State for wall section
   const [selectedWall, setSelectedWall] = useState('Wall 1');
@@ -134,16 +147,16 @@ export const EditTemplate: React.FC = () => {
   };
 
   // Wall configuration states
-  const [wallConfig, setWallConfig] = useState('1면 오픈');
-  const [wallSelection1, setWallSelection1] = useState('전체벽');
-  const [wallSelection2, setWallSelection2] = useState('전체벽');
+  const [wallConfig, setWallConfig] = useState(t('1면 오픈'));
+  const [wallSelection1, setWallSelection1] = useState(t('전체벽'));
+  const [wallSelection2, setWallSelection2] = useState(t('전체벽'));
   const [showWallConfigOptions, setShowWallConfigOptions] = useState(false);
   const [showWallSelection1Options, setShowWallSelection1Options] = useState(false);
   const [showWallSelection2Options, setShowWallSelection2Options] = useState(false);
 
   // Wall configuration options
-  const wallConfigOptions = ['1면 오픈', '2면 오픈', '3면 오픈', '4면 오픈'];
-  const wallSelectionOptions = ['전체벽', 'wall 1', 'wall 2', 'wall 3'];
+  const wallConfigOptions = [t('1면 오픈'), t('2면 오픈'), t('3면 오픈'), t('4면 오픈')];
+  const wallSelectionOptions = [t('전체벽'), t('Wall 1'), t('Wall 2'), t('Wall 3')];
 
   // Wall curve state
   const [wallCurveValue, setWallCurveValue] = useState(60); // Starting at 60%
@@ -187,18 +200,18 @@ export const EditTemplate: React.FC = () => {
 
   // State for regulation modal
   const [showRegulationModal, setShowRegulationModal] = useState(true);
-  const [selectedExhibition, setSelectedExhibition] = useState("박람회 A - 대한민국, 서울, 코엑스");
-  const [selectedHall, setSelectedHall] = useState("Hall A");
+  const [selectedExhibition, setSelectedExhibition] = useState(t("박람회 A - 대한민국, 서울, 코엑스"));
+  const [selectedHall, setSelectedHall] = useState(t("Hall A"));
   const [showExhibitionOptions, setShowExhibitionOptions] = useState(false);
   const [showHallOptions, setShowHallOptions] = useState(false);
 
   // Exhibition and hall options
   const exhibitionOptions = [
-    "박람회 A - 대한민국, 서울, 코엑스",
-    "박람회 B - 대한민국, 부산, 벡스코",
-    "박람회 C - 미국, 라스베가스, CES"
+    t("박람회 A - 대한민국, 서울, 코엑스"),
+    t("박람회 B - 대한민국, 부산, 벡스코"),
+    t("박람회 C - 미국, 라스베가스, CES")
   ];
-  const hallOptions = ["Hall A", "Hall B", "Hall C", "Hall D"];
+  const hallOptions = [t("Hall A"), t("Hall B"), t("Hall C"), t("Hall D")];
 
   // Handlers for selecting exhibition and hall
   const handleRegulationApply = () => {
@@ -206,7 +219,7 @@ export const EditTemplate: React.FC = () => {
   };
 
   // State for rigging type
-  const [riggingType, setRiggingType] = useState("리깅 종류 선택");
+  const [riggingType, setRiggingType] = useState(t("리깅 종류 선택"));
   const [showRiggingOptions, setShowRiggingOptions] = useState(false);
   const [riggingDimensions, setRiggingDimensions] = useState({
     th: "250mm",  // T.h (Tower height)
@@ -215,7 +228,7 @@ export const EditTemplate: React.FC = () => {
   });
 
   // Rigging options
-  const riggingOptions = ["기본 리깅", "곡선형 리깅", "타워형 리깅", "혼합형 리깅"];
+  const riggingOptions = [t("기본 리깅"), t("곡선형 리깅"), t("타워형 리깅"), t("혼합형 리깅")];
 
   // Handlers for selecting rigging type and updating dimensions
   const updateRiggingDimension = (dimension: 'th' | 'rh' | 'htob', value: string) => {
@@ -238,15 +251,6 @@ export const EditTemplate: React.FC = () => {
   const location = useLocation();
   const templateId = location.state?.templateId;
   const templateImage = location.state?.templateImage;
-
-  
-  // Load template data based on templateId
-  // React.useEffect(() => {
-  //   if (templateId) {
-  //     // Fetch template data or load from cache
-  //     console.log(`Loading template ${templateId}`);
-  //   }
-  // }, [templateId]);
 
   // Use effect to synchronize dimensions with the 3D model
   useEffect(() => {
@@ -280,7 +284,7 @@ export const EditTemplate: React.FC = () => {
         </div>
         <input
           className="relative flex-1 font-18-mideum font-[number:var(--18-mideum-font-weight)] text-[#959dae] text-[length:var(--18-mideum-font-size)] tracking-[var(--18-mideum-letter-spacing)] leading-[var(--18-mideum-line-height)] [font-style:var(--18-mideum-font-style)] bg-transparent border-none outline-none"
-          value={projectName}
+          value={t(projectName)}
           onChange={(e) => setProjectName(e.target.value)}
           placeholder="프로젝트 명"
         />
@@ -1355,7 +1359,7 @@ export const EditTemplate: React.FC = () => {
                 <div className="flex flex-col items-start gap-3.5 px-2.5 py-0 relative self-stretch w-full flex-[0_0_auto]">
                   <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                     <div className="relative w-fit mt-[-1.00px] font-16-regular font-[number:var(--16-regular-font-weight)] text-[#8896a5] text-[length:var(--16-regular-font-size)] tracking-[var(--16-regular-letter-spacing)] leading-[var(--16-regular-line-height)] whitespace-nowrap [font-style:var(--16-regular-font-style)]">
-                      박람회 선택
+                      {t("박람회 선택")}
                     </div>
 
                     <div className="relative w-full">
@@ -1394,7 +1398,7 @@ export const EditTemplate: React.FC = () => {
 
                   <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                     <div className="relative w-fit mt-[-1.00px] font-16-regular font-[number:var(--16-regular-font-weight)] text-[#8896a5] text-[length:var(--16-regular-font-size)] tracking-[var(--16-regular-letter-spacing)] leading-[var(--16-regular-line-height)] whitespace-nowrap [font-style:var(--16-regular-font-style)]">
-                      전시 홀 선택
+                      {t("전시 홀 선택")}
                     </div>
 
                     <div className="relative w-full">
@@ -1437,7 +1441,7 @@ export const EditTemplate: React.FC = () => {
                   onClick={handleRegulationApply}
                 >
                   <div className="font-14-mideum font-[number:var(--14-mideum-font-weight)] text-white text-[length:var(--14-mideum-font-size)] leading-[var(--14-mideum-line-height)] relative w-fit mt-[-1.00px] tracking-[var(--14-mideum-letter-spacing)] whitespace-nowrap [font-style:var(--14-mideum-font-style)]">
-                    적용하기
+                    {t("적용하기")}
                   </div>
                 </button>
               </div>

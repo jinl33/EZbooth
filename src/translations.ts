@@ -8,8 +8,50 @@ export type TranslationDictionary = Record<string, string>;
 export interface TranslationsType {
   [category: string]: {
     en: TranslationDictionary;
-    ko?: TranslationDictionary; // Optional Korean overrides
+    ko?: TranslationDictionary;
   };
+}
+
+/**
+ * Translates a string while preserving non-alphabetic characters and handling multi-word phrases
+ * @param text The text to translate
+ * @param dictionary The translation dictionary to use
+ * @returns Translated text with preserved special characters
+ */
+export function translatePreservingSpecialChars(text: string, dictionary: TranslationDictionary): string {
+  if (!text) return text;
+  
+  // First check if the complete multi-word phrase exists in the dictionary
+  if (dictionary[text]) {
+    return dictionary[text];
+  }
+  
+  // Extract numbers and special parts
+  const parts = text.split(/(\d+|\(|\)|\/)/).filter(Boolean);
+  let result = "";
+  
+  for (let part of parts) {
+    // If it's a number or special character, keep it as is
+    if (/^[\d()\/]+$/.test(part)) {
+      result += part;
+    } 
+    // Otherwise, translate the word if it exists in dictionary
+    else {
+      const trimmedPart = part.trim();
+      if (trimmedPart) {
+        if (dictionary[trimmedPart]) {
+          result += dictionary[trimmedPart];
+        } else {
+          result += trimmedPart;
+        }
+      } else {
+        // If it's just whitespace, preserve it
+        result += part;
+      }
+    }
+  }
+  
+  return result;
 }
 
 // Define translation categories organized by pages
@@ -28,6 +70,8 @@ export const translations: TranslationsType = {
       "로그인": "Log In",
       "회원가입": "Sign Up",
       "검색": "Search",
+      "적용": "apply",
+      "적용하기": "apply",
     }
   },
   
@@ -86,23 +130,16 @@ export const translations: TranslationsType = {
       "경사로": "Slope",
       "가구": "Furniture",
       
-      "108sqm (Medium)": "108sqm (중형)",
-      "36sqm (Small)": "36sqm (소형)",
-      "3-Sided-Open": "3면 오픈",
-      "2-Sided-Open": "2면 오픈",
-      "Linear Rigging/Double Floor": "직선형 리깅/복층",
-      "Linear Structure/Single floor": "직선형 리깅/단층",
-      "2ea, Slope Angle 1/12": "2ea, Slope Angle 1/12",
-      "Chair(4), Table(1), Counter(1)": "의자(4), 테이블(1), 카운터(1)",
-      
+      // Furniture options
+      "의자": "Chair",
+      "테이블": "Table", 
+      "카운터": "Counter",
+      "개": "ea",
 
       // Size options
       "소형": "Small",
       "중형": "Medium",
       "대형": "Large",
-      "Small": "소형",
-      "Medium": "중형",
-      "Large": "대형",
       
       // Purpose options
       "미팅형": "Meeting Type",
@@ -119,6 +156,7 @@ export const translations: TranslationsType = {
       // Template attributes
       "곡선의": "Curved",
       "직선의": "Linear",
+      "직선형": "Linear",
       "복층": "Double Floor",
       "단층": "Single Floor",
       "모던한": "Modern",
@@ -133,7 +171,9 @@ export const translations: TranslationsType = {
       "그래픽": "Graphic",
       "라이팅": "Lighting",
       "lED": "LED",
-      "컨츄리풍의": "Country Style"
+      "컨츄리풍의": "Country Style",
+      "경사도": "Slope Angle",
+      "리깅": "Rigging"
     }
   },
   
@@ -143,31 +183,68 @@ export const translations: TranslationsType = {
       "프로젝트 명": "Project Name",
       "구조": "Structure",
       "재질": "Material",
-      "Floor": "Floor",
-      "Wall": "Wall",
-      "Pantry": "Pantry",
-      "Rigging": "Rigging",
-      "apply": "Apply",
+      "전체벽": "Main Wall",
+      "1면 오픈": "1-Sided Open",
+      "2면 오픈": "2-Sided Open",
+      "3면 오픈": "3-Sided Open",
+      "4면 오픈": "4-Sided Open",
+      "박람회 선택": "Select Exhibition",
+      "전시 홀 선택": "Select Exhibition Hall",
       "리깅 종류 선택": "Select Rigging Type",
-      "기본 리깅": "Basic Rigging",
+      "기본 리깅": "Regular Rigging",
       "곡선형 리깅": "Curved Rigging",
       "타워형 리깅": "Tower Rigging",
       "혼합형 리깅": "Mixed Rigging",
-      "Art Wall Curves": "Art Wall Curves",
-      "Flat": "Flat",
-      "Curved": "Curved",
-      "전체벽": "Full Wall",
-      "Carpet": "Carpet",
-      "Laminate": "Laminate",
-      "Edge Molding": "Edge Molding",
-      "Wall Paint": "Wall Paint",
-      "Wooden Floor": "Wooden Floor",
-      "Export": "Export",
-      "Regulation": "Regulation",
-      "Comments": "Comments",
-      "박람회 선택": "Select Exhibition",
-      "전시 홀 선택": "Select Exhibition Hall",
-      "적용하기": "Apply"
+      "적용하기": "Apply",
+      "박람회 A - 대한민국, 서울, 코엑스": "Fair A - Korea, Seoul, Coex",
+      "박람회 B - 대한민국, 부산, 벡스코": "Fair B - Korea, Busan, Vecsco",
+      "박람회 C - 미국, 라스베가스, CES": "Fair C - USA, Las Vegas, CES"
+    }
+  },
+
+  // TabNavigation component translations
+  tab: {
+    en: {
+      "설명": "Description",
+      "구조": "Structure",
+      "재질": "Material",
+      "가구": " Furniture",
+      "인포데스크": "Info Desk",
+      "테이블": "Table",
+      "의자": "Chair",
+      "미팅형": "Meeting Type",
+      "전시형": "Exhibition Type",
+      "전시+미팅형": "Exhibition/Meeting Type",
+      "쇼케이스": "Showcase",
+      "알루미늄 쇼케이스": "Aluminium Showcase",
+      "목공 쇼케이스": "Wooden Showcase",
+      "전시 선반": "Display Shelf",
+      "스탠딩 의자": "Bar Chair",
+    }
+  },
+
+  // Regulation component translations
+  regulation: {
+    en: {
+      "레귤레이션 설정": "Regulation Settings"
+    }
+  },
+
+  // Export component translations
+  export: {
+    en: {
+      "검색서": "Document",
+      "제안서": "Proposal",
+      "3D 파일": "3D File",
+      "파일 크기": "File Size",
+      "파일 형식": "File Format",
+      "재료포": "Material Information",
+      "전적서에 재료포 포함하기": "Add Material Information to the Proposal",
+      "프리뷰": "Preview",
+      "Open": "Open",
+      "고급": "Premium",
+      "중간": "Medium",
+      "기본": "Basic"
     }
   },
 

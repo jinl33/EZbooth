@@ -1,5 +1,6 @@
 // components/Regulation.tsx
 import React, { FC, useState } from "react";
+import { useTranslation } from '../LanguageContext';
 
 interface RegulationProps {
   className?: string;
@@ -13,10 +14,6 @@ export const Regulation: FC<RegulationProps> = ({
   const [showRegulationsModal, setShowRegulationsModal] = useState(false);
   const [heightRestrictionOpen, setHeightRestrictionOpen] = useState(false);
   const [prohibitedActionsOpen, setProhibitedActionsOpen] = useState(false);
-  // const [wallConstructionOpen, setWallConstructionOpen] = useState(false);
-  // const [riggingRestrictionsOpen, setRiggingRestrictionsOpen] = useState(false);
-  // const [floorCoveringOpen, setFloorCoveringOpen] = useState(false);
-  // const [loadCapacityOpen, setLoadCapacityOpen] = useState(false);
   
   // Toggle handlers for each dropdown
   const toggleHeightRestrictions = (e: React.MouseEvent) => {
@@ -29,25 +26,7 @@ export const Regulation: FC<RegulationProps> = ({
     setProhibitedActionsOpen(!prohibitedActionsOpen);
   };
 
-  // const toggleWallConstruction = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   setWallConstructionOpen(!wallConstructionOpen);
-  // };
-
-  // const toggleRiggingRestrictions = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   setRiggingRestrictionsOpen(!riggingRestrictionsOpen);
-  // };
-
-  // const toggleFloorCovering = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   setFloorCoveringOpen(!floorCoveringOpen);
-  // };
-
-  // const toggleLoadCapacity = (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-  //   setLoadCapacityOpen(!loadCapacityOpen);
-  // };
+  const { t } = useTranslation('regulation');
 
   return (
     <>
@@ -113,7 +92,7 @@ export const Regulation: FC<RegulationProps> = ({
   
                         <div className="inline-flex items-center justify-center gap-2.5 px-[22px] py-[15px] relative flex-[0_0_auto] bg-white rounded-[99999px] border border-solid border-[#b3c3d2]">
                           <div className="mt-[-1.00px] font-14-mideum font-[number:var(--14-mideum-font-weight)] text-[length:var(--14-mideum-font-size)] leading-[var(--14-mideum-line-height)] relative w-fit text-[#1662ef] tracking-[var(--14-mideum-letter-spacing)] whitespace-nowrap [font-style:var(--14-mideum-font-style)]">
-                            레귤레이션 설정
+                            {t("레귤레이션 설정")}
                           </div>
                         </div>
                       </div>

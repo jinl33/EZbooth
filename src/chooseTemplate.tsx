@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import LanguageToggle from "./components/LanguageToggle";
 import { useTranslation, useLanguage } from "./LanguageContext";
+import translations, { translatePreservingSpecialChars } from "./translations";
 
 // images
 import logo from "./images/logo.png";
@@ -49,6 +50,14 @@ export const ChooseTemplate: React.FC = () => {
   const { t } = useTranslation('chooseTemplate');
   const { language } = useLanguage();
 
+  // Helper function to translate text while preserving special characters
+  const translateSpec = (text: string): string => {
+    if (!text || language === 'ko') return text;
+    
+    const dictionary = translations.chooseTemplate.en;
+    return translatePreservingSpecialChars(text, dictionary);
+  };
+
   // Helper function to generate description from attributes
   const getTemplateDescription = (template: Template): string => {
     // Build the description with translated parts
@@ -84,12 +93,12 @@ export const ChooseTemplate: React.FC = () => {
       },
       image: temp1,
       specs: {
-        dimension: "108sqm (Medium)",
-        layout: "3-Sided-Open",
-        structure: "Linear Rigging/Double Floor",
+        dimension: "108sqm (중형)",
+        layout: "3면 오픈",
+        structure: "직선형 리깅/복층",
         platformHeight: "5cm",
-        slope: "2ea, Slope Angle 1/12",
-        furniture: "Chair(4), Table(1), Counter(1)"
+        slope: "2개, 경사도 1/12",
+        furniture: "의자(4), 테이블(1), 카운터(1)"
       }
     },
     // Second template
@@ -103,11 +112,11 @@ export const ChooseTemplate: React.FC = () => {
       },
       image: temp2,
       specs: {
-        dimension: "36sqm (Small)",
-        layout: "2-Sided-Open",
-        structure: "Linear Structure/Single Floor",
+        dimension: "36sqm (소형)",
+        layout: "2면 오픈",
+        structure: "직선형 리깅/단층",
         platformHeight: "5cm",
-        furniture: "Display Shelf(4), Counter(1)"
+        furniture: "의자(2), 테이블(1), 카운터(1)"
       }
     },
     // Template 3
@@ -916,6 +925,7 @@ export const ChooseTemplate: React.FC = () => {
           <div onClick={(e) => e.stopPropagation()}>
             {/* Frame Component */}
             <div className="flex flex-col w-[760px] items-center gap-3.5 pt-0 pb-6 px-0 relative bg-white rounded-2xl shadow-xl">
+              {/* Modal header remains the same */}
               <div className="flex flex-col items-start px-5 py-0 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex items-center justify-between px-2.5 py-[22px] relative self-stretch w-full flex-[0_0_auto]">
                   <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
@@ -963,53 +973,57 @@ export const ChooseTemplate: React.FC = () => {
                           ))}
                         </div>
                       </div>
-                      {/* Template Details */}
+                      {/* Template Details - Updated with translateSpec function */}
                       <div className="flex flex-col items-start justify-center gap-3 pt-0 pb-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
                         {selectedTemplateForModal.specs?.dimension && (
                           <p className="relative self-stretch text-sm">
                             <span className="text-[#959dae]">{t("면적")}: </span>
-                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.dimension) : selectedTemplateForModal.specs.dimension}</span>
+                            <span className="text-[#000000]">
+                              {translateSpec(selectedTemplateForModal.specs.dimension)}
+                            </span>
                           </p>
                         )}
-                        
                         {selectedTemplateForModal.specs?.layout && (
                           <p className="relative self-stretch text-sm">
                             <span className="text-[#959dae]">{t("배치")}: </span>
-                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.layout) : selectedTemplateForModal.specs.layout}</span>
+                            <span className="text-[#000000]">
+                              {t(selectedTemplateForModal.specs.layout)}
+                            </span>
                           </p>
                         )}
-                        
                         {selectedTemplateForModal.specs?.structure && (
                           <p className="relative self-stretch text-sm">
                             <span className="text-[#959dae]">{t("구조")}: </span>
-                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.structure) : selectedTemplateForModal.specs.structure}</span>
+                            <span className="text-[#000000]">
+                              {translateSpec(selectedTemplateForModal.specs.structure)}
+                            </span>
                           </p>
                         )}
-                        
                         {selectedTemplateForModal.specs?.platformHeight && (
                           <p className="relative self-stretch text-sm">
                             <span className="text-[#959dae]">{t("플랫폼 높이")}: </span>
                             <span className="text-[#000000]">{selectedTemplateForModal.specs.platformHeight}</span>
                           </p>
                         )}
-                        
                         {selectedTemplateForModal.specs?.slope && (
                           <p className="relative self-stretch text-sm">
                             <span className="text-[#959dae]">{t("경사로")}: </span>
-                            <span className="text-[#000000]">{selectedTemplateForModal.specs.slope}</span>
+                            <span className="text-[#000000]">
+                              {translateSpec(selectedTemplateForModal.specs.slope)}
+                            </span>
                           </p>
                         )}
-                        
                         {selectedTemplateForModal.specs?.furniture && (
                           <p className="relative self-stretch text-sm">
                             <span className="text-[#959dae]">{t("가구")}: </span>
-                            <span className="text-[#000000]">{language === 'ko' ? t(selectedTemplateForModal.specs.furniture) : selectedTemplateForModal.specs.furniture}</span>
+                            <span className="text-[#000000]">
+                              {translateSpec(selectedTemplateForModal.specs.furniture)}
+                            </span>
                           </p>
                         )}
                       </div>
                     </div>
                   </div>
-
                   <button 
                     className="flex items-center justify-center gap-2.5 px-[22px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-[#1662ef] rounded-[99999px] hover:bg-[#1255d4] transition-colors"
                     onClick={() => handleStartWithTemplate(selectedTemplateForModal)}
