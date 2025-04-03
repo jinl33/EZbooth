@@ -14,7 +14,7 @@ interface TabNavigationProps {
     individual: boolean;
   };
   toggleFurnitureSection: (section: 'set' | 'individual') => void;
-  vector39: string; // Pass the vector image
+  vector39: string;
 }
 
 export const TabNavigation: React.FC<TabNavigationProps> = ({
@@ -84,7 +84,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
               <div className="flex items-center gap-3 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col w-[141px] items-start gap-1.5 relative">
                   <div className="flex h-[90px] items-center justify-center gap-2.5 px-8 py-[21px] relative self-stretch w-full bg-[#eeeeee] rounded-sm">
-                    <div className="w-fit mt-[-1.00px] font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
+                    <div className="w-fit mt-[-1.00px] text-ellipsis whitespace-nowrap font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
                       {tp("인포데스크1")}
                       <br />
                       {tp("테이블1")}
@@ -100,7 +100,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
                 <div className="flex flex-col w-[141px] items-start gap-1.5 relative">
                   <div className="flex h-[90px] items-center justify-center gap-2.5 px-8 py-[13px] relative self-stretch w-full bg-[#eeeeee] rounded-sm">
-                    <div className="w-fit mt-[-1.00px] font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
+                    <div className="w-fit mt-[-1.00px] text-ellipsis whitespace-nowrap font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
                       {tp("인포데스크1")}
                       <br />
                       {tp("테이블1")}
@@ -121,7 +121,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
               <div className="flex items-center gap-3 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col w-[141px] items-start gap-1.5 relative">
                   <div className="flex h-[90px] items-center justify-center gap-2.5 px-8 py-[13px] relative self-stretch w-full bg-[#eeeeee] rounded-sm">
-                    <div className="w-fit mt-[-1.00px] font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
+                    <div className="w-fit mt-[-1.00px] text-ellipsis whitespace-nowrap font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
                       {tp("인포데스크1")}
                       <br />
                       {tp("테이블2")}
@@ -139,14 +139,14 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
                 <div className="flex flex-col w-[141px] items-start gap-1.5 relative">
                   <div className="flex h-[90px] items-center justify-center gap-2.5 px-[29px] py-[11px] relative self-stretch w-full bg-[#eeeeee] rounded-sm">
-                    <p className="w-fit font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
+                    <p className="w-fit mt-[-1.00px] text-ellipsis whitespace-nowrap font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
                       {tp("인포데스크1")}
                       <br />
-                      {tp("전시 선반 2")}
+                      {tp("전시 선반2")}
                       <br />
                       {tp("스탠딩 의자2")}
                       <br />
-                      {tp("쇼케이스 1")}
+                      {tp("쇼케이스1")}
                     </p>
                   </div>
 
@@ -160,10 +160,10 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
               <div className="flex items-center gap-3 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col w-[141px] items-start gap-1.5 relative">
                   <div className="flex h-[90px] items-center justify-center gap-2.5 px-[30px] py-[13px] relative self-stretch w-full bg-[#eeeeee] rounded-sm">
-                    <div className="w-fit mt-[-1.00px] font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
+                    <div className="w-fit mt-[-1.00px] text-ellipsis whitespace-nowrap font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
                       {tp("인포데스크1")}
                       <br />
-                      {tp("전시 선반 2")}
+                      {tp("전시 선반2")}
                       <br />
                       {tp("스탠딩 의자1")}
                       <br />
@@ -178,10 +178,10 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
                 <div className="flex flex-col w-[141px] items-start gap-1.5 relative">
                   <div className="flex h-[90px] items-center justify-center gap-2.5 px-8 py-[12px] relative self-stretch w-full bg-[#eeeeee] rounded-sm">
-                    <p className="w-fit mt-[-1.00px] font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
+                    <p className="w-fit mt-[-1.00px] text-ellipsis whitespace-nowrap font-16-medium font-[number:var(--16-medium-font-weight)] text-[#000000] text-[length:var(--16-medium-font-size)] text-center leading-[var(--16-medium-line-height)] relative tracking-[var(--16-medium-letter-spacing)] [font-style:var(--16-medium-font-style)]">
                       {tp("인포데스크1")}
                       <br />
-                      {tp("전시 선반 2")}
+                      {tp("전시 선반2")}
                       <br />
                       {tp("테이블1/의자4")}
                       <br />
@@ -192,7 +192,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
                   </div>
 
                   <div className="relative self-stretch [font-family:'Pretendard-Regular',Helvetica] font-normal text-[#000000] text-sm tracking-[0] leading-[14px]">
-                    {tp("전시+미팅형1(M)")}
+                    {tp("전시/미팅형1(S)")}
                   </div>
                 </div>
               </div>

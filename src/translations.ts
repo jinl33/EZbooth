@@ -13,7 +13,7 @@ export interface TranslationsType {
 }
 
 /**
- * Translates a string while preserving non-alphabetic characters and handling multi-word phrases
+ * Translates a string while preserving special characters and handling mixed Korean-English text
  * @param text The text to translate
  * @param dictionary The translation dictionary to use
  * @returns Translated text with preserved special characters
@@ -21,38 +21,83 @@ export interface TranslationsType {
 export function translatePreservingSpecialChars(text: string, dictionary: TranslationDictionary): string {
   if (!text) return text;
   
-  // First check if the complete multi-word phrase exists in the dictionary
+  // First check if the complete phrase exists in the dictionary
   if (dictionary[text]) {
     return dictionary[text];
   }
   
-  // Extract numbers and special parts
-  const parts = text.split(/(\d+|\(|\)|\/)/).filter(Boolean);
-  let result = "";
-  
-  for (let part of parts) {
-    // If it's a number or special character, keep it as is
-    if (/^[\d()\/]+$/.test(part)) {
-      result += part;
-    } 
-    // Otherwise, translate the word if it exists in dictionary
-    else {
-      const trimmedPart = part.trim();
-      if (trimmedPart) {
-        if (dictionary[trimmedPart]) {
-          result += dictionary[trimmedPart];
-        } else {
-          result += trimmedPart;
-        }
-      } else {
-        // If it's just whitespace, preserve it
-        result += part;
-      }
+  // Add direct translations for compound phrases before parsing
+  // Check for specific two-word Korean phrases that need to be kept together
+  for (const key of Object.keys(dictionary)) {
+    if (key.includes(' ') && text.includes(key)) {
+      // Replace the full Korean phrase with its English translation
+      text = text.replace(key, dictionary[key]);
     }
   }
   
+  // Handle mixed Korean/English phrases with slashes
+  const slashPattern = /(\p{Script=Hangul}+)\/(\w+)/gu;
+  let result = text.replace(slashPattern, (match, koreanPart, englishPart) => {
+    const translatedKorean = dictionary[koreanPart] || koreanPart;
+    return `${translatedKorean}/${englishPart}`;
+  });
+  
+  // Handle English/Korean phrases with slashes
+  result = result.replace(/(\w+)\/(\p{Script=Hangul}+)/gu, (match, englishPart, koreanPart) => {
+    const translatedKorean = dictionary[koreanPart] || koreanPart;
+    return `${englishPart}/${translatedKorean}`;
+  });
+  
+  // Handle Korean words directly followed by numbers or alphanumeric patterns
+  const koreanWithNumberPattern = /(\p{Script=Hangul}+)(\d+|\d+\([A-Z]\))/gu;
+  result = result.replace(koreanWithNumberPattern, (match, word, suffix) => {
+    return (dictionary[word] || word) + suffix;
+  });
+  
+  // Handle Korean word followed by parenthesized number
+  result = result.replace(/(\p{Script=Hangul}+)(\(\d+\))/gu, (match, word, parens) => {
+    return (dictionary[word] || word) + parens;
+  });
+  
+  // Handle mixed Korean-English phrases (space-separated)
+  // First process specific multi-word Korean phrases before individual words
+  const mixedPhrasePattern = /(\p{Script=Hangul}+) (\p{Script=Hangul}+)(\s+\w+|\d+)/gu;
+  result = result.replace(mixedPhrasePattern, (match, koreanWord1, koreanWord2, rest) => {
+    const compoundKey = `${koreanWord1} ${koreanWord2}`;
+    if (dictionary[compoundKey]) {
+      return `${dictionary[compoundKey]}${rest}`;
+    }
+    
+    const translated1 = dictionary[koreanWord1] || koreanWord1;
+    const translated2 = dictionary[koreanWord2] || koreanWord2;
+    return `${translated1} ${translated2}${rest}`;
+  });
+  
+  // Standard space-separated mixed phrases
+  result = result.replace(/(\p{Script=Hangul}+)\s+(\w+)/gu, (match, koreanWord, englishWord) => {
+    const translatedKorean = dictionary[koreanWord] || koreanWord;
+    return `${translatedKorean} ${englishWord}`;
+  });
+  
+  // Number followed by Korean unit
+  result = result.replace(/(\d+)(\p{Script=Hangul}+)/gu, (match, number, unit) => {
+    return number + (dictionary[unit] || unit);
+  });
+  
+  // Korean term followed by a specific pattern like 1/12
+  result = result.replace(/(\p{Script=Hangul}+)(\d+\/\d+)/gu, (match, word, fraction) => {
+    return (dictionary[word] || word) + fraction;
+  });
+  
+  // Translate any remaining Korean words or phrases
+  const koreanWordsRegex = /\p{Script=Hangul}+/gu;
+  result = result.replace(koreanWordsRegex, (match) => {
+    return dictionary[match] || match;
+  });
+  
   return result;
 }
+
 
 // Define translation categories organized by pages
 export const translations: TranslationsType = {
@@ -212,14 +257,17 @@ export const translations: TranslationsType = {
       "인포데스크": "Info Desk",
       "테이블": "Table",
       "의자": "Chair",
-      "미팅형": "Meeting Type",
-      "전시형": "Exhibition Type",
-      "전시+미팅형": "Exhibition/Meeting Type",
+      "미팅형": "Meeting",
+      "전시형": "Display",
+      "전시/미팅형": "Display/Meeting",
       "쇼케이스": "Showcase",
-      "알루미늄 쇼케이스": "Aluminium Showcase",
-      "목공 쇼케이스": "Wooden Showcase",
-      "전시 선반": "Display Shelf",
-      "스탠딩 의자": "Bar Chair",
+      "알루미늄 쇼케이스": "Aluminium SC",
+      "목공 쇼케이스": "Wooden SC",
+      "전시 선반": "Display Table",
+      "스탠딩 의자": "Standing Chair",
+      "전시": "Display",
+      "스탠딩": "Standing",
+      "선반": "Table",
     }
   },
 

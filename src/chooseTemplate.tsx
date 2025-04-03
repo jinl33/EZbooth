@@ -301,7 +301,7 @@ export const ChooseTemplate: React.FC = () => {
     };
   }, [showColorWheel]);
 
-  // Update the search functionality to work with our dynamic descriptions
+  // Search functionality to work with our dynamic descriptions
   useEffect(() => {
     const filtered = templateData.filter(template => {
       // Generate the description for searching
@@ -964,16 +964,18 @@ export const ChooseTemplate: React.FC = () => {
                     <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
                       <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                         <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-                          {selectedTemplateForModal.attributes.keywords.slice(0, 2).map((keyword, index) => (
-                            <div key={index} className="inline-flex items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] bg-white rounded-full border border-solid border-[#bbc4d0]">
-                              <div className="relative w-fit mt-[-1.00px] text-xs text-[#000000] whitespace-nowrap">
-                                {t(keyword)}
-                              </div>
+                        {[...selectedTemplateForModal.attributes.keywords.slice(0, 2), 
+                          selectedTemplateForModal.attributes.purpose
+                        ].map((keyword, index) => (
+                          <div key={index} className="inline-flex items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] bg-white rounded-full border border-solid border-[#bbc4d0]">
+                            <div className="relative w-fit mt-[-1.00px] text-xs text-[#000000] whitespace-nowrap">
+                              {t(keyword)}
                             </div>
-                          ))}
+                          </div>
+                        ))}
                         </div>
                       </div>
-                      {/* Template Details - Updated with translateSpec function */}
+                      {/* Template Details */}
                       <div className="flex flex-col items-start justify-center gap-3 pt-0 pb-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
                         {selectedTemplateForModal.specs?.dimension && (
                           <p className="relative self-stretch text-sm">
