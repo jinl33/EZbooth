@@ -9,6 +9,7 @@ import { ChooseTemplate } from './chooseTemplate';
 import { EditTemplate } from './editTemplate';  
 import SurveyPopup from './components/SurveyPopup';
 import { LanguageProvider } from './LanguageContext';
+import { Analytics } from '@vercel/analytics/react';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -24,6 +25,7 @@ root.render(
           <Route path="/choose-template" element={<ChooseTemplate />} />
           <Route path="/edit-template" element={<EditTemplate />} />
         </Routes>
+        <Analytics />
       </BrowserRouter>
     </LanguageProvider>
   </React.StrictMode>
